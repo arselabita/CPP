@@ -10,7 +10,7 @@
 class PhoneBook {
     public:
         PhoneBook();
-        
+
         // const Contact* getContactsArr();
         bool handleUserInput(std::string userInput);
         
@@ -20,7 +20,7 @@ class PhoneBook {
         int getNumOfContactsToDisplay();
         void setNumOfContactsToDisplay(int contactsToDisplay);
         
-        void add();
+        bool add();
         void search();
         void showInfo();
 
