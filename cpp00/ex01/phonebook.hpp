@@ -9,24 +9,25 @@
 
 class PhoneBook {
     public:
-        void showInfo();
-        void handleUserInput(std::string userInput);
-
-        const Contact* getContactsArr();
-
+        PhoneBook();
+        
+        // const Contact* getContactsArr();
+        bool handleUserInput(std::string userInput);
+        
         int getNextPosition();
-        void setNextPosition(int position);
-
+        void setNextPosition(int nextPosition);
+        
         int getNumOfContactsToDisplay();
-        void setNumOfContactsToDisplay(int numContacts);
+        void setNumOfContactsToDisplay(int contactsToDisplay);
         
         void add();
         void search();
+        void showInfo();
 
     private:
         Contact contacts[MAX_SIZE];
-        int nextPosition; // where should the next contact be saved
-        int numOfContactsToDisplay; // how many valid contacts can search display
+        int nextPosition; // where should the next contact be saved, like array position 
+        int contactsToDisplay; // how many valid contacts are currently stored
 };
 
 

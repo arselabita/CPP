@@ -1,67 +1,74 @@
 #include "phonebook.hpp"
 
-void PhoneBook::setNextPosition(int position){
-    nextPosition = position;
+PhoneBook::PhoneBook()
+{
+    nextPosition = 0;
+    contactsToDisplay = 0;
+}
+void PhoneBook::setNextPosition(int nextPosition){
+    this->nextPosition = nextPosition;
 }
 int PhoneBook::getNextPosition(){
-    return nextPosition;
+    return (nextPosition);
 }
 
 int PhoneBook::getNumOfContactsToDisplay(){
-    return numOfContactsToDisplay;
+    return (contactsToDisplay);
 }
-void PhoneBook::setNumOfContactsToDisplay(int numContacts){
-    numOfContactsToDisplay = numContacts;
+void PhoneBook::setNumOfContactsToDisplay(int contactsToDisplay){
+    this->contactsToDisplay = contactsToDisplay;
 }
 
 void PhoneBook::add()
 {
     std::string input;
 
-    std::cout << "Enter first name: " << std::endl;
+    std::cout << "Enter first name: ";
     std::getline(std::cin, input);
-    contacts->setFirstName(input);
+    contacts[nextPosition].setFirstName(input);
 
-    std::cout << "Enter last name: " << std::endl;
+    std::cout << "Enter last name: ";
     std::getline(std::cin, input);
-    contacts->setLastName(input);
+    contacts[nextPosition].setLastName(input);
 
-    std::cout << "Enter nick name: " << std::endl;
+    std::cout << "Enter nick name: ";
     std::getline(std::cin, input);
-    contacts->setNickName(input);
+    contacts[nextPosition].setNickName(input);
 
-    std::cout << "Enter darkest secret: " << std::endl;
+    std::cout << "Enter darkest secret: ";
     std::getline(std::cin, input);
-    contacts->setDarkestSecret(input);
+    contacts[nextPosition].setDarkestSecret(input);
 
-    std::cout << "Enter phone number: " << std::endl;
+    std::cout << "Enter phone number: ";
     std::getline(std::cin, input);
-    contacts->setPhoneNumber(input);
-
+    contacts[nextPosition].setPhoneNumber(input);
+    nextPosition++;
     if (std::cin.eof() == true)
     {
-        std::cout << "Careful you are using ctrl + D" << std::endl;
+        std::cout << "eof" << std::endl;
         exit(0);
     }
 }
-void PhoneBook::handleUserInput(std::string userInput)
+bool PhoneBook::handleUserInput(std::string userInput)
 {
     if (userInput == "ADD")
     {
         std::cout << "***Entering ADD*** " << std::endl;
         add();
+        return (true);
     }
     else if (userInput == "SEARCH")
     {
         std::cout << "***Entering SEARCH***" << std::endl;
-
+        return (true);
     }
     else if (userInput == "EXIT")
     {
         std::cout << "***Entering EXIT***" << std::endl;
+        return (false);
     }
-    return;
+    return (true);
 }
 void PhoneBook::showInfo() {
-    std::cout << "Enter a command: ADD, SEARCH, EXIT" << std::endl;
+    std::cout << "Welcome! Options: ADD, SEARCH, EXIT\n";
 }
