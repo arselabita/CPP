@@ -26,8 +26,9 @@ class PhoneBook {
         
         bool add();
         void search();
+        void exit();
         void showInfo();
-        std::string truncStr(std::string str);
+        const std::string truncStr(std::string str);
 
     private:
         Contact contacts[MAX_SIZE];

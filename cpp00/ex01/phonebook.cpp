@@ -75,7 +75,7 @@ bool PhoneBook::add(){
     return (true);
 }
 
-std::string PhoneBook::truncStr(std::string str){
+const std::string PhoneBook::truncStr(std::string str){
     if (str.length() > 10)
         return str.substr(0, 9) + ".";
     return str;
@@ -103,6 +103,29 @@ void PhoneBook::search(){
             << "\n";
     }
     std::cout << std::string(50, '-') << "\n";
+
+    int inputContact;
+    std::cout << "Which contact do you want? ";
+    std::cin >> inputContact;
+    if (inputContact > contactsCount)
+        std::cout << "Pass a contact please! \n";
+    else{
+        for (int i = 0; i < contactsCount; i++)
+        {
+            if (inputContact == i){
+                std::string name = contacts[i].getFirstName();
+                std::string surname = contacts[i].getLastName();
+                std::string nickname = contacts[i].getNickName();
+    
+                std::cout << std::setw(10) << (i) << " |"
+                    << std::setw(10) << truncStr(name) << " |"
+                    << std::setw(10) << truncStr(surname) << " |"
+                    << std::setw(10) << truncStr(nickname) << " |"
+                    << "\n";
+            }
+        }
+    }
+
 }
 
 bool PhoneBook::handleUserInput(std::string userInput)
@@ -121,6 +144,7 @@ bool PhoneBook::handleUserInput(std::string userInput)
     else if (userInput == "EXIT")
     {
         std::cout << "***Entering EXIT***" << std::endl;
+        exit();
     }
     return (true);
 }
