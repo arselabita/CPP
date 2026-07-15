@@ -14,12 +14,13 @@ int main()
         {
             std::cout << "Bye!\n";
             std::cin.clear();
+            break;
         }
         if (std::cin.fail() == true || std::cin.eof() == true)
         {
             std::cerr << "Make sure you passed the right input." << std::endl;
             std::cin.clear();
-            exit(0);
+            break;
         }
         std::cin.clear();
         phoneBook.showInfo();

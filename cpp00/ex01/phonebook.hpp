@@ -12,13 +12,14 @@ class PhoneBook {
         PhoneBook();
 
         // const Contact* getContactsArr();
+        bool getValidInput(const std::string& prompt, std::string& input);
         bool handleUserInput(std::string userInput);
-        
+    
         int getNextPosition();
         void setNextPosition(int nextPosition);
         
-        int getNumOfContactsToDisplay();
-        void setNumOfContactsToDisplay(int contactsToDisplay);
+        int getContactsCount();
+        void setContactsCount(int contactsCount);
         
         bool add();
         void search();
@@ -27,7 +28,7 @@ class PhoneBook {
     private:
         Contact contacts[MAX_SIZE];
         int nextPosition; // where should the next contact be saved, like array position 
-        int contactsToDisplay; // how many valid contacts are currently stored
+        int contactsCount; // how many valid contacts are currently stored
 };
 
 
