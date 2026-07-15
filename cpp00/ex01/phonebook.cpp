@@ -39,8 +39,7 @@ bool PhoneBook::getValidInput(const std::string& prompt, std::string& input){
     } while (true);
 }
 
-bool PhoneBook::add()
-{
+bool PhoneBook::add(){
     std::string input;
     Contact tempContacts;
 
@@ -76,6 +75,36 @@ bool PhoneBook::add()
     return (true);
 }
 
+std::string PhoneBook::truncStr(std::string str){
+    if (str.length() > 10)
+        return str.substr(0, 9) + ".";
+    return str;
+}
+
+void PhoneBook::search(){
+    std::cout << std::right;
+    std::cout << "\n"
+        << std::setw(10) << "Index" << " |"
+        << std::setw(10) << "Firstname" << " |"
+        << std::setw(10) << "Lastname" << " |"
+        << std::setw(10) << "Nickname" << " |"
+        << std::endl;
+    std::cout << std::string(50, '-') << "\n";
+    for (int i = 0; i < contactsCount; i++)
+    {
+        std::string name = contacts[i].getFirstName();
+        std::string surname = contacts[i].getLastName();
+        std::string nickname = contacts[i].getNickName();
+
+        std::cout << std::setw(10) << (i) << " |"
+            << std::setw(10) << truncStr(name) << " |"
+            << std::setw(10) << truncStr(surname) << " |"
+            << std::setw(10) << truncStr(nickname) << " |"
+            << "\n";
+    }
+    std::cout << std::string(50, '-') << "\n";
+}
+
 bool PhoneBook::handleUserInput(std::string userInput)
 {
     if (userInput == "ADD")
@@ -83,17 +112,15 @@ bool PhoneBook::handleUserInput(std::string userInput)
         std::cout << "***Entering ADD*** " << std::endl;
         if (add() == false)
             return (false);
-        return (true);
     }
     else if (userInput == "SEARCH")
     {
         std::cout << "***Entering SEARCH***" << std::endl;
-        return (true);
+        search();
     }
     else if (userInput == "EXIT")
     {
         std::cout << "***Entering EXIT***" << std::endl;
-        return (false);
     }
     return (true);
 }

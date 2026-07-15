@@ -6,6 +6,7 @@
 #include <string>
 #include <cstring>
 #include <cctype>
+#include <iomanip>
 
 #define MAX_SIZE 8
 
@@ -26,6 +27,7 @@ class PhoneBook {
         bool add();
         void search();
         void showInfo();
+        std::string truncStr(std::string str);
 
     private:
         Contact contacts[MAX_SIZE];
