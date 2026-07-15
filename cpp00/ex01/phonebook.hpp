@@ -4,6 +4,8 @@
 #include "contact.hpp"
 #include <iostream>
 #include <string>
+#include <cstring>
+#include <cctype>
 
 #define MAX_SIZE 8
 

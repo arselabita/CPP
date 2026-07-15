@@ -1,10 +1,13 @@
 #include "phonebook.hpp"
 
+/// @brief constructor
 PhoneBook::PhoneBook()
 {
     nextPosition = 0;
     contactsCount = 0;
 }
+
+/// @brief  getters and setters
 void PhoneBook::setNextPosition(int nextPosition){
     this->nextPosition = nextPosition;
 }
@@ -19,16 +22,21 @@ void PhoneBook::setContactsCount(int contactsCount){
     this->contactsCount = contactsCount;
 }
 
+/// @brief  show info method
+void PhoneBook::showInfo() {
+    std::cout << "Welcome! Options: ADD, SEARCH, EXIT\n";
+}
+
 bool PhoneBook::getValidInput(const std::string& prompt, std::string& input){
     do {
         std::cout << prompt;
         if (!std::getline(std::cin, input))
             return (false);
+        input.erase(std::remove_if(input.begin(), input.end(), ::isspace), input.end());
         if (!input.empty())
             return (true);
         std::cout << "The field should'nt stay empty!!\n";
     } while (true);
-    return (true);
 }
 
 bool PhoneBook::add()
@@ -58,13 +66,16 @@ bool PhoneBook::add()
 
     contacts[nextPosition] = tempContacts;
 
+    if (contactsCount < MAX_SIZE)
+        contactsCount++;
+
     nextPosition++;
-    contactsCount++;
 
     if (nextPosition == MAX_SIZE)
         nextPosition = 0;
     return (true);
 }
+
 bool PhoneBook::handleUserInput(std::string userInput)
 {
     if (userInput == "ADD")
@@ -85,7 +96,4 @@ bool PhoneBook::handleUserInput(std::string userInput)
         return (false);
     }
     return (true);
-}
-void PhoneBook::showInfo() {
-    std::cout << "Welcome! Options: ADD, SEARCH, EXIT\n";
 }
