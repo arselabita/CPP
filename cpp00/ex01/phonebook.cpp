@@ -19,49 +19,49 @@ bool PhoneBook::getValidInput(const std::string &prompt, std::string &input)
     {
         std::cout << prompt;
         if (!std::getline(std::cin, input))
-            return (false);
+            return false;
         if (!input.empty() && input.find_first_not_of(" \t") != std::string::npos)
-            return (true);
+            return true;
         std::cout << "The field should'nt stay empty!!\n";
     } while (true);
 }
 bool PhoneBook::validateInput(Contact &tempContacts, std::string &input)
 {
     if (!getValidInput("Enter first name: ", input))
-        return (false);
+        return false;
     tempContacts.setFirstName(input);
 
     if (!getValidInput("Enter last name: ", input))
-        return (false);
+        return false;
     tempContacts.setLastName(input);
 
     if (!getValidInput("Enter nick name: ", input))
-        return (false);
+        return false;
     tempContacts.setNickName(input);
 
     if (!getValidInput("Enter darkest secret: ", input))
-        return (false);
+        return false;
     tempContacts.setDarkestSecret(input);
 
     if (!getValidInput("Enter phone number: ", input))
-        return (false);
+        return false;
     tempContacts.setPhoneNumber(input);
-    return (true);
+    return true;
 }
 bool PhoneBook::add()
 {
     std::string input;
     Contact tempContacts;
 
-    if (validateInput(tempContacts, input) == false)
-        return (false);
+    if (!validateInput(tempContacts, input))
+        return false;
     contacts[nextPosition] = tempContacts;
     if (contactsCount < MAX_SIZE)
         contactsCount++;
     nextPosition++;
     if (nextPosition == MAX_SIZE)
         nextPosition = 0;
-    return (true);
+    return true;
 }
 
 std::string PhoneBook::truncStr(const std::string &str)
@@ -102,7 +102,7 @@ void PhoneBook::promptForIndex(std::string &inputStrContact, int &inputContact)
             inputContact = -1;
             break;
         }
-        if (inputStrContact.empty() && inputStrContact.find_first_not_of(" \t") != std::string::npos)
+        if (inputStrContact.empty() || inputStrContact.find_first_not_of(" \t") == std::string::npos)
         {
             std::cout << "Invalid input. Enter a number.\n";
             continue;
@@ -154,7 +154,7 @@ bool PhoneBook::search()
         displayTable();
         showContact();
     }
-    return (true);
+    return true;
 }
 
 bool PhoneBook::handleUserInput(std::string userInput)
@@ -162,19 +162,20 @@ bool PhoneBook::handleUserInput(std::string userInput)
     if (userInput == "ADD")
     {
         std::cout << "***Entering ADD*** " << std::endl;
-        if (add() == false)
-            return (false);
+        if (!add())
+            return false;
     }
     else if (userInput == "SEARCH")
     {
         std::cout << "***Entering SEARCH***" << std::endl;
-        if (search() == false)
-            return (false);
+        if (!search()
+    )
+            return false;
     }
     else if (userInput == "EXIT")
     {
         std::cout << "***Entering EXIT***" << std::endl;
         // exit();
     }
-    return (true);
+    return true;
 }

@@ -26,5 +26,5 @@ int main()
         std::cin.clear();
         phoneBook.showInfo();
     }
-    return (0);
+    return 0;
 }
