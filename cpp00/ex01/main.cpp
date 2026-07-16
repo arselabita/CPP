@@ -6,7 +6,8 @@ int main()
     PhoneBook phoneBook;
 
     phoneBook.showInfo();
-    while (!std::cin.fail()) {
+    while (!std::cin.fail())
+    {
         std::string userInput;
 
         std::getline(std::cin, userInput);

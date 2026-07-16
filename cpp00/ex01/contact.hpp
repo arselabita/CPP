@@ -3,7 +3,8 @@
 
 #include <string>
 
-class Contact {
+class Contact
+{
 public:
     std::string getFirstName() const;
     void setFirstName(std::string firstName);
@@ -19,7 +20,7 @@ public:
 
     std::string getPhoneNumber() const;
     void setPhoneNumber(std::string phoneNumber);
-    
+
 private:
     std::string firstName;
     std::string lastName;

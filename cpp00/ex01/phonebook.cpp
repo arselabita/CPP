@@ -7,42 +7,26 @@ PhoneBook::PhoneBook()
     contactsCount = 0;
 }
 
-/// @brief  getters and setters
-void PhoneBook::setNextPosition(int nextPosition){
-    this->nextPosition = nextPosition;
-}
-int PhoneBook::getNextPosition(){
-    return (nextPosition);
-}
-
-int PhoneBook::getContactsCount(){
-    return (contactsCount);
-}
-void PhoneBook::setContactsCount(int contactsCount){
-    this->contactsCount = contactsCount;
-}
-
 /// @brief  show info method
-void PhoneBook::showInfo() {
-    std::cout << "Welcome! Options: ADD, SEARCH, EXIT\n";
+void PhoneBook::showInfo()
+{
+    std::cout << "\nWelcome! Options: ADD, SEARCH, EXIT\n";
 }
 
-bool PhoneBook::getValidInput(const std::string& prompt, std::string& input){
-    do {
+bool PhoneBook::getValidInput(const std::string &prompt, std::string &input)
+{
+    do
+    {
         std::cout << prompt;
         if (!std::getline(std::cin, input))
             return (false);
-        input.erase(std::remove_if(input.begin(), input.end(), ::isspace), input.end());
-        if (!input.empty())
+        if (!input.empty() && input.find_first_not_of(" \t") != std::string::npos)
             return (true);
         std::cout << "The field should'nt stay empty!!\n";
     } while (true);
 }
-
-bool PhoneBook::add(){
-    std::string input;
-    Contact tempContacts;
-
+bool PhoneBook::validateInput(Contact &tempContacts, std::string &input)
+{
     if (!getValidInput("Enter first name: ", input))
         return (false);
     tempContacts.setFirstName(input);
@@ -62,70 +46,115 @@ bool PhoneBook::add(){
     if (!getValidInput("Enter phone number: ", input))
         return (false);
     tempContacts.setPhoneNumber(input);
+    return (true);
+}
+bool PhoneBook::add()
+{
+    std::string input;
+    Contact tempContacts;
 
+    if (validateInput(tempContacts, input) == false)
+        return (false);
     contacts[nextPosition] = tempContacts;
-
     if (contactsCount < MAX_SIZE)
         contactsCount++;
-
     nextPosition++;
-
     if (nextPosition == MAX_SIZE)
         nextPosition = 0;
     return (true);
 }
 
-const std::string PhoneBook::truncStr(std::string str){
+std::string PhoneBook::truncStr(const std::string &str)
+{
     if (str.length() > 10)
         return str.substr(0, 9) + ".";
     return str;
 }
-
-void PhoneBook::search(){
-    std::cout << std::right;
+void PhoneBook::displayTable()
+{
     std::cout << "\n"
-        << std::setw(10) << "Index" << " |"
-        << std::setw(10) << "Firstname" << " |"
-        << std::setw(10) << "Lastname" << " |"
-        << std::setw(10) << "Nickname" << " |"
-        << std::endl;
+              << std::setw(10) << "Index" << " |"
+              << std::setw(10) << "Firstname" << " |"
+              << std::setw(10) << "Lastname" << " |"
+              << std::setw(10) << "Nickname" << " |"
+              << std::endl;
     std::cout << std::string(50, '-') << "\n";
+
     for (int i = 0; i < contactsCount; i++)
     {
-        std::string name = contacts[i].getFirstName();
-        std::string surname = contacts[i].getLastName();
-        std::string nickname = contacts[i].getNickName();
 
         std::cout << std::setw(10) << (i) << " |"
-            << std::setw(10) << truncStr(name) << " |"
-            << std::setw(10) << truncStr(surname) << " |"
-            << std::setw(10) << truncStr(nickname) << " |"
-            << "\n";
+                  << std::setw(10) << truncStr(contacts[i].getFirstName()) << " |"
+                  << std::setw(10) << truncStr(contacts[i].getLastName()) << " |"
+                  << std::setw(10) << truncStr(contacts[i].getNickName()) << " |"
+                  << "\n";
+        std::cout << std::string(50, '-') << "\n";
     }
-    std::cout << std::string(50, '-') << "\n";
+}
 
-    int inputContact;
-    std::cout << "Which contact do you want? ";
-    std::cin >> inputContact;
-    if (inputContact > contactsCount)
-        std::cout << "Pass a contact please! \n";
-    else{
-        for (int i = 0; i < contactsCount; i++)
+void PhoneBook::promptForIndex(std::string &inputStrContact, int &inputContact)
+{
+    while (true)
+    {
+        std::cout << "\nWhich contact do you want? ";
+        if (!std::getline(std::cin, inputStrContact))
         {
-            if (inputContact == i){
-                std::string name = contacts[i].getFirstName();
-                std::string surname = contacts[i].getLastName();
-                std::string nickname = contacts[i].getNickName();
-    
-                std::cout << std::setw(10) << (i) << " |"
-                    << std::setw(10) << truncStr(name) << " |"
-                    << std::setw(10) << truncStr(surname) << " |"
-                    << std::setw(10) << truncStr(nickname) << " |"
-                    << "\n";
-            }
+            inputContact = -1;
+            break;
+        }
+        if (inputStrContact.empty() && inputStrContact.find_first_not_of(" \t") != std::string::npos)
+        {
+            std::cout << "Invalid input. Enter a number.\n";
+            continue;
+        }
+        if (std::stringstream(inputStrContact) >> inputContact)
+            break;
+        std::cout << "Invalid input. Enter a number.\n";
+    }
+}
+void PhoneBook::printContact(int inputContact)
+{
+    std::cout << "\n"
+              << "First name: " << contacts[inputContact].getFirstName()
+              << "\n"
+              << "Last name: " << contacts[inputContact].getLastName()
+              << "\n"
+              << "Nick name: " << contacts[inputContact].getNickName()
+              << "\n"
+              << "Darkest secret: " << contacts[inputContact].getDarkestSecret()
+              << "\n"
+              << "Phone number: " << contacts[inputContact].getPhoneNumber()
+              << std::endl;
+}
+void PhoneBook::showContact()
+{
+    std::string inputStrContact;
+    int inputContact;
+
+    while (true)
+    {
+        promptForIndex(inputStrContact, inputContact);
+        if (inputContact >= contactsCount || inputContact < 0)
+            std::cout << "Invalid index! Please enter a valid contact number! \n";
+        else
+        {
+            printContact(inputContact);
+            break;
         }
     }
+}
+bool PhoneBook::search()
+{
+    std::cout << std::right;
 
+    if (contactsCount == 0)
+        std::cout << "PhoneBook is empty!\n";
+    else
+    {
+        displayTable();
+        showContact();
+    }
+    return (true);
 }
 
 bool PhoneBook::handleUserInput(std::string userInput)
@@ -139,12 +168,13 @@ bool PhoneBook::handleUserInput(std::string userInput)
     else if (userInput == "SEARCH")
     {
         std::cout << "***Entering SEARCH***" << std::endl;
-        search();
+        if (search() == false)
+            return (false);
     }
     else if (userInput == "EXIT")
     {
         std::cout << "***Entering EXIT***" << std::endl;
-        exit();
+        // exit();
     }
     return (true);
 }

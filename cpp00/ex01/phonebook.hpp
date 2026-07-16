@@ -7,34 +7,32 @@
 #include <cstring>
 #include <cctype>
 #include <iomanip>
+#include <sstream>
 
 #define MAX_SIZE 8
 
-class PhoneBook {
-    public:
-        PhoneBook();
+class PhoneBook
+{
+public:
+    PhoneBook();
 
-        // const Contact* getContactsArr();
-        bool getValidInput(const std::string& prompt, std::string& input);
-        bool handleUserInput(std::string userInput);
-    
-        int getNextPosition();
-        void setNextPosition(int nextPosition);
-        
-        int getContactsCount();
-        void setContactsCount(int contactsCount);
-        
-        bool add();
-        void search();
-        void exit();
-        void showInfo();
-        const std::string truncStr(std::string str);
+    bool getValidInput(const std::string &prompt, std::string &input);
+    bool handleUserInput(std::string userInput);
+    void showInfo();
+    bool add();
+    bool validateInput(Contact &tempContacts, std::string &input);
+    bool search();
+    std::string truncStr(const std::string &str);
+    void displayTable();
+    void showContact();
+    void promptForIndex(std::string &inputStrContact, int &inputContact);
+    void printContact(int inputContact);
+    void exit();
 
-    private:
-        Contact contacts[MAX_SIZE];
-        int nextPosition; // where should the next contact be saved, like array position 
-        int contactsCount; // how many valid contacts are currently stored
+private:
+    Contact contacts[MAX_SIZE];
+    int nextPosition;  // where should the next contact be saved, like array position
+    int contactsCount; // how many valid contacts are currently stored
 };
-
 
 #endif
