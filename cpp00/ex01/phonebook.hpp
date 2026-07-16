@@ -10,6 +10,9 @@
 #include <sstream>
 
 #define MAX_SIZE 8
+#define GREEN_TXT "\033[32m"
+#define RED_TXT "\033[31m" 
+#define RESET "\033[m"
 
 class PhoneBook
 {
@@ -19,6 +22,7 @@ public:
     bool getValidInput(const std::string &prompt, std::string &input);
     bool handleUserInput(std::string userInput);
     void showInfo();
+    void showError(const std::string &errorStr);
     bool add();
     bool validateInput(Contact &tempContacts, std::string &input);
     bool search();
@@ -27,7 +31,6 @@ public:
     void showContact();
     void promptForIndex(std::string &inputStrContact, int &inputContact);
     void printContact(int inputContact);
-    void exit();
 
 private:
     Contact contacts[MAX_SIZE];

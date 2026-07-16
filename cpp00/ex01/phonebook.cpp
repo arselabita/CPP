@@ -6,13 +6,21 @@ PhoneBook::PhoneBook()
     nextPosition = 0;
     contactsCount = 0;
 }
-
 /// @brief  show info method
 void PhoneBook::showInfo()
 {
-    std::cout << "\nWelcome! Options: ADD, SEARCH, EXIT\n";
+    std::cout << GREEN_TXT << "\nWelcome!" << "\nOptions: ADD, SEARCH, EXIT\n"
+              << RESET;
+    std::cout << "\n"
+              << std::string(50, '-') << "\n";
 }
-
+void PhoneBook::showError(const std::string &errorStr)
+{
+    std::cerr << RED_TXT << "\n"
+              << errorStr << RESET;
+    std::cout << "\n"
+              << std::string(50, '-') << "\n";
+}
 bool PhoneBook::getValidInput(const std::string &prompt, std::string &input)
 {
     do
@@ -22,7 +30,7 @@ bool PhoneBook::getValidInput(const std::string &prompt, std::string &input)
             return false;
         if (!input.empty() && input.find_first_not_of(" \t") != std::string::npos)
             return true;
-        std::cout << "The field should'nt stay empty!!\n";
+        showError("The field should'nt stay empty!!\n");
     } while (true);
 }
 bool PhoneBook::validateInput(Contact &tempContacts, std::string &input)
@@ -104,12 +112,12 @@ void PhoneBook::promptForIndex(std::string &inputStrContact, int &inputContact)
         }
         if (inputStrContact.empty() || inputStrContact.find_first_not_of(" \t") == std::string::npos)
         {
-            std::cout << "Invalid input. Enter a number.\n";
+            showError("Invalid input. Enter a number.\n");
             continue;
         }
         if (std::stringstream(inputStrContact) >> inputContact)
             break;
-        std::cout << "Invalid input. Enter a number.\n";
+        showError("Invalid input. Enter a number.\n");
     }
 }
 void PhoneBook::printContact(int inputContact)
@@ -135,7 +143,7 @@ void PhoneBook::showContact()
     {
         promptForIndex(inputStrContact, inputContact);
         if (inputContact >= contactsCount || inputContact < 0)
-            std::cout << "Invalid index! Please enter a valid contact number! \n";
+            showError("Invalid index! Please enter a valid contact number! \n");
         else
         {
             printContact(inputContact);
@@ -148,7 +156,7 @@ bool PhoneBook::search()
     std::cout << std::right;
 
     if (contactsCount == 0)
-        std::cout << "PhoneBook is empty!\n";
+        showError("PhoneBook is empty!\n");
     else
     {
         displayTable();
@@ -168,14 +176,14 @@ bool PhoneBook::handleUserInput(std::string userInput)
     else if (userInput == "SEARCH")
     {
         std::cout << "***Entering SEARCH***" << std::endl;
-        if (!search()
-    )
+        if (!search())
             return false;
     }
     else if (userInput == "EXIT")
     {
         std::cout << "***Entering EXIT***" << std::endl;
-        // exit();
+        std::cout << "Ciao!" << std::endl;
+        exit(0);
     }
     return true;
 }
