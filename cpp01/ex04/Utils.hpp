@@ -13,7 +13,6 @@
 void showError(const std::string &errorStr);
 bool argCheck(int ac);
 
-bool readFile(std::string &filePath);
-
+bool readFile(const std::string& filePath, const std::string& s1, const std::string& s2);
 
 #endif
