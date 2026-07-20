@@ -22,11 +22,11 @@ bool argCheck(int ac)
     }
     return true;
 }
-bool readFile(const std::string& filePath, const std::string& s1, const std::string& s2)
+bool readFile(const std::string &filePath, const std::string &s1, const std::string &s2)
 {
     std::ifstream originalFile(filePath);
     std::string pathName, fileText, fileContent;
-int count = 0;
+
     if (!originalFile.is_open())
         return showError("Failed to open file."), false;
     pathName = filePath + ".replace";
@@ -35,13 +35,18 @@ int count = 0;
         return showError("Failed creating file."), false;
     while (std::getline(originalFile, fileText))
     {
-        if (fileText == s1)
+        std::string newStr = "";
+        size_t currPos = 0;
+        size_t foundPos = fileText.find(s1, currPos);
+        while (foundPos != std::string::npos)
         {
-            fileText = s2;
-            count++;
+            newStr.append(fileText, currPos, foundPos - currPos);
+            newStr.append(s2);
+            currPos = foundPos+s1.length();
+            foundPos = fileText.find(s1, currPos);
         }
-        std::cout << "counter: " << count <<"\n";
-        fileContent += fileText + '\n';
+        newStr.append(fileText, currPos, std::string::npos);
+        fileContent += newStr + '\n';
     }
     copyFile << fileContent;
     if (!originalFile.eof())
