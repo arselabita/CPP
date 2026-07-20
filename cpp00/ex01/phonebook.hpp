@@ -11,7 +11,7 @@
 
 #define MAX_SIZE 8
 #define GREEN_TXT "\033[32m"
-#define RED_TXT "\033[31m" 
+#define RED_TXT "\033[31m"
 #define RESET "\033[m"
 
 class PhoneBook
@@ -20,6 +20,7 @@ public:
     PhoneBook();
 
     bool getValidInput(const std::string &prompt, std::string &input);
+    bool getValidPhoneNumber(const std::string &prompt, std::string &input);
     bool handleUserInput(std::string userInput);
     void showInfo();
     void showError(const std::string &errorStr);
@@ -29,7 +30,7 @@ public:
     std::string truncStr(const std::string &str);
     void displayTable();
     void showContact();
-    void promptForIndex(std::string &inputStrContact, int &inputContact);
+    bool promptForIndex(std::string &inputStrContact, int &inputContact);
     void printContact(int inputContact);
 
 private:

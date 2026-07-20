@@ -13,13 +13,13 @@ int main()
         std::getline(std::cin, userInput);
         if (phoneBook.handleUserInput(userInput) == false)
         {
-            std::cout << "Bye!\n";
+            phoneBook.showError("Bye Bye");
             std::cin.clear();
             break;
         }
         if (std::cin.fail() == true || std::cin.eof() == true)
         {
-            std::cerr << "Make sure you passed the right input." << std::endl;
+            phoneBook.showError("Make sure you passed the right input.");
             std::cin.clear();
             break;
         }
