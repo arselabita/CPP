@@ -1,21 +1,24 @@
 #include <iostream>
+#include <cctype>
 
-int main (int ac, char *av[])
+int main(int ac, char *av[])
 {
 	if (ac < 2)
+	{
 		std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *";
+		return EXIT_FAILURE;
+	}
 	int i = 1;
-	while(i < ac)
+	while (i < ac)
 	{
 		int j = 0;
 		while (av[i][j])
 		{
-			if (av[i][j] >= 'a' && av[i][j] <= 'z')
-				av[i][j] = av[i][j] - 32;
+			std::cout << (char)std::toupper(av[i][j]);
 			j++;
-		}			
-		std::cout << av[i];
+		}
 		i++;
 	}
-	return (0);
+	std::cout << std::endl;
+	return EXIT_SUCCESS;
 }
