@@ -6,7 +6,7 @@ int main(int ac, char *av[])
 	if (ac < 2)
 	{
 		std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *";
-		return EXIT_FAILURE;
+		return 1;
 	}
 	int i = 1;
 	while (i < ac)
@@ -20,5 +20,5 @@ int main(int ac, char *av[])
 		i++;
 	}
 	std::cout << std::endl;
-	return EXIT_SUCCESS;
+	return 0;
 }
