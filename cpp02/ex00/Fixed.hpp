@@ -7,8 +7,8 @@ class Fixed
 {
 public:
     Fixed(void);                          // Constructor
-    Fixed(const Fixed& fixPointNumCopy);                   // Copy constructor
-    Fixed& operator= (const Fixed& fixPointNumCopy);     // Copy assignment operator
+    Fixed(const Fixed& original);                   // Copy constructor
+    Fixed& operator= (const Fixed& original);     // Copy assignment operator
     ~Fixed(void);                                        // Destructor
 
     int getRawBits(void) const;
@@ -16,7 +16,7 @@ public:
 
 private:
     int _fixPointNum;
-    static const int _fractBits;
+    static const int _fractBits = 8;
 };
 
 #endif
