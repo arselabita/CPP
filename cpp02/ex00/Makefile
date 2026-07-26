@@ -4,6 +4,7 @@ CXX = c++
 CXX_FLAGS = -Wall -Werror -Wextra -std=c++98
 
 SRCS = main.cpp Fixed.cpp
+OBJS = $(SRCS:.cpp=.o)
 
 SILENT ?=0
 GREEN = \033[0;32m
@@ -36,12 +37,13 @@ re: fclean all
 
 info: header
 define HEADER
-	@echo " ____            _ _ _                               _____"
-	@echo "| __ ) _ __ __ _(_|_|_)_ __  _ __  _ __  ___________|__  /"
-	@echo "|  _ \| '__/ _\` | | | | '_ \| '_ \| '_ \|_  /_  /_  / / / "
-	@echo "| |_) | | | (_| | | | | | | | | | | | | |/ / / / / / / /_ "
-	@echo "|____/|_|  \__,_|_|_|_|_| |_|_| |_|_| |_/___/___/___/____|"
+	@echo " _____ _              _ "
+	@echo "|  ___(_)_  _____  __| |"
+	@echo "| |_  | \ \/ / _ \/ _\` |"
+	@echo "|  _| | |>  <  __/ (_| |"
+	@echo "|_|   |_/_/\_\___|\__,_|"
 endef
+
 export HEADER
 
 header:
