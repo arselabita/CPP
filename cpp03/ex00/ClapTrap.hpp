@@ -7,22 +7,25 @@
 class ClapTrap
 {
 public:
-    ClapTrap(void);                          // Constructor
-    ClapTrap(const ClapTrap &original);      // Copy constructor
+    ClapTrap(void);                                // Constructor
+    ClapTrap(const ClapTrap &original);            // Copy constructor
     ClapTrap &operator=(const ClapTrap &original); // Copy assignment operator
-    ~ClapTrap(void); // Destructor
+    ~ClapTrap(void);                               // Destructor
 
     ClapTrap(const std::string &name);
 
     void attack(const std::string &target);
-    void takeDamage(unsigned int amount);
+    // void takeDamage(unsigned int amount);
     void beRepaired(unsigned int amount);
+
+    int getHitPoints(void) const;
+    void setHitPoints(int hitPoints);
 
 private:
     std::string _name;
-    int _hitPoints = 10;
-    int _energyPoints = 10;
-    int _attackDamage = 0;
+    unsigned int _hitPoints;
+    unsigned int _energyPoints;
+    unsigned int _attackDamage;
 };
 
 #endif
