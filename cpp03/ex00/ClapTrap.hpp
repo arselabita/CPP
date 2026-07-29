@@ -15,11 +15,15 @@ public:
     ClapTrap(const std::string &name);
 
     void attack(const std::string &target);
-    // void takeDamage(unsigned int amount);
+    void takeDamage(unsigned int amount);
     void beRepaired(unsigned int amount);
 
     int getHitPoints(void) const;
     void setHitPoints(int hitPoints);
+    void setAttack(int attack);
+    int getAttack(void) const;
+    void setEnergy(int energy);
+    int getEnergy(void) const;
 
 private:
     std::string _name;
