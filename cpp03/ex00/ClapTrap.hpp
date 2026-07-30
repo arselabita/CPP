@@ -18,13 +18,6 @@ public:
     void takeDamage(unsigned int amount);
     void beRepaired(unsigned int amount);
 
-    int getHitPoints(void) const;
-    void setHitPoints(int hitPoints);
-    void setAttack(int attack);
-    int getAttack(void) const;
-    void setEnergy(int energy);
-    int getEnergy(void) const;
-
 private:
     std::string _name;
     unsigned int _hitPoints;

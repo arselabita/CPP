@@ -4,11 +4,13 @@ ClapTrap::ClapTrap(void) : _name("nope"), _hitPoints(10), _energyPoints(10), _at
 {
     std::cout << "Default constructor called" << std::endl;
 }
+
 ClapTrap::ClapTrap(const ClapTrap &original) : _name(original._name), _hitPoints(original._hitPoints),
                                                _energyPoints(original._energyPoints), _attackDamage(original._attackDamage)
 {
     std::cout << "Copy constructor called" << std::endl;
 }
+
 ClapTrap &ClapTrap::operator=(const ClapTrap &original)
 {
     std::cout << "Copy assignment operator called" << std::endl;
@@ -21,40 +23,18 @@ ClapTrap &ClapTrap::operator=(const ClapTrap &original)
     }
     return *this;
 }
+
 ClapTrap::~ClapTrap(void)
 {
     std::cout << "Destructor called" << std::endl;
 }
+
 ClapTrap::ClapTrap(const std::string &name) : _name(name),
                                             _hitPoints(10), _energyPoints(10), _attackDamage(0)
 {
     std::cout << "Constructor called\n";
 }
-void ClapTrap::setHitPoints(int hitPoints)
-{
-    _hitPoints = hitPoints;
-}
-int ClapTrap::getHitPoints(void) const
-{
-    return _hitPoints;
-}
-void ClapTrap::setAttack(int attack)
-{
-    _attackDamage = attack;
-}
-int ClapTrap::getAttack(void) const
-{
-    return _attackDamage;
-}
 
-void ClapTrap::setEnergy(int energy)
-{
-    _energyPoints = energy;
-}
-int ClapTrap::getEnergy(void) const
-{
-    return _energyPoints;
-}
 void ClapTrap::attack(const std::string &target)
 {
     if (_hitPoints == 0 || _energyPoints == 0)
@@ -66,6 +46,7 @@ void ClapTrap::attack(const std::string &target)
     std::cout << "ClapTrap " << _name << " attacks " << target << " , causing " 
                             << _attackDamage << " points of damage!" << std::endl;
 }
+
 void ClapTrap::takeDamage(unsigned int amount)
 {
     if (_hitPoints == 0)
@@ -84,6 +65,7 @@ void ClapTrap::takeDamage(unsigned int amount)
     std::cout << "ClapTrap received a damage of " << amount 
                 << " , decreasing hit points to " << _hitPoints << std::endl;
 }
+
 void ClapTrap::beRepaired(unsigned int amount)
 {
     if (_hitPoints == 0 || _energyPoints == 0)

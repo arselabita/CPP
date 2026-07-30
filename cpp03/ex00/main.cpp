@@ -2,31 +2,51 @@
 
 int main()
 {
-    ClapTrap a("Arsela");
-    std::cout << "Energy Points Before: " << a.getEnergy() << std::endl;
-    a.attack("Hidri");
-    std::cout << "Energy Points After: " << a.getEnergy() << std::endl;
-    std::cout << "Attack Points Before: " << a.getAttack() << std::endl;
-    a.takeDamage(2);
-    std::cout << "Attack Points After: " << a.getAttack() << std::endl;
-a.attack("Hidri");
-a.attack("Hidri");
-a.attack("Hidri");
+    ClapTrap first;
+    std::cout << "\n";
+    std::cout << "\n";
 
-std::cout << "\n\n jemi ketu \n\n";
-    std::cout << "Attack Points Before: " << a.getAttack() << std::endl;
+    ClapTrap a("Arsela");
+    a.attack("Hidri");
+   
+    a.takeDamage(2);
+
+    a.attack("Hidri");
+    a.attack("Hidri");
+    a.attack("Hidri");
+
     a.takeDamage(15);
-    std::cout << "Attack Points After: " << a.getAttack() << std::endl;
+    a.beRepaired(2);
+
     a.beRepaired(2);
 
     std::cout << "\n";
 
-    std::cout << "Hit Points Before Repair: " << a.getHitPoints() << std::endl;
-    std::cout << "Energy Points Before: " << a.getEnergy() << std::endl;
+    std::cout << "Copy assignment\n";
 
-    a.beRepaired(2);
-    std::cout << "Hit Points After Repair: " << a.getHitPoints() << std::endl;
-    std::cout << "Energy Points After: " << a.getEnergy() << std::endl;
+    ClapTrap b;
+    a = b;
+
+    b.attack("Arsela");
+    b.attack("You");
+    b.beRepaired(1);
+    b.takeDamage(4);
+
+    std::cout << "\n";
+
+    std::cout << "Copy obj\n";
+    ClapTrap copy(a);
+    copy.attack("Stela");
+    copy.beRepaired(3);
+    copy.attack("Stela");
+    copy.attack("Stela");
+    copy.attack("Stela");
+    copy.attack("Stela");
+    copy.takeDamage(2);
+    copy.takeDamage(2);
+    copy.takeDamage(2);
+    copy.takeDamage(2);
+    std::cout << "\n";
 
     return 0;
 }
