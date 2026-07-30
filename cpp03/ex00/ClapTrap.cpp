@@ -25,7 +25,8 @@ ClapTrap::~ClapTrap(void)
 {
     std::cout << "Destructor called" << std::endl;
 }
-ClapTrap::ClapTrap(const std::string &name) : _name(name), _hitPoints(10), _energyPoints(10), _attackDamage(0)
+ClapTrap::ClapTrap(const std::string &name) : _name(name),
+                                            _hitPoints(10), _energyPoints(10), _attackDamage(0)
 {
     std::cout << "Constructor called\n";
 }
@@ -56,21 +57,42 @@ int ClapTrap::getEnergy(void) const
 }
 void ClapTrap::attack(const std::string &target)
 {
-    std::cout << "ClapTrap " << _name << " attacks " << target << " , causing " << _attackDamage << " points of damage!" << std::endl;
+    if (_hitPoints == 0 || _energyPoints == 0)
+    { 
+        std::cout << "Oppss! Seems like you ran out of Hit/Energy Points\n";
+        return;
+    }
     _energyPoints -= 1;
+    std::cout << "ClapTrap " << _name << " attacks " << target << " , causing " 
+                            << _attackDamage << " points of damage!" << std::endl;
 }
 void ClapTrap::takeDamage(unsigned int amount)
 {
-    std::cout << "ClapTrap " << _name << " damages by " << amount << " , causing " << _attackDamage << " points of damage!" << std::endl;
-
-    _attackDamage = _attackDamage + amount;
+    if (_hitPoints == 0)
+    {
+        std::cout << "Oppss! Seems like you ran out of hit points!\n";
+        return ;
+    }
+    if (amount > _hitPoints)
+    {
+        _hitPoints = 0;
+        std::cout << "ClapTrap " << _name << " takes " << amount 
+                << " ponts of damage, reducing its hit points to " << _hitPoints << std::endl;
+        return ;
+    }
+    _hitPoints = _hitPoints - amount;
+    std::cout << "ClapTrap received a damage of " << amount 
+                << " , decreasing hit points to " << _hitPoints << std::endl;
 }
 void ClapTrap::beRepaired(unsigned int amount)
 {
     if (_hitPoints == 0 || _energyPoints == 0)
+    {
         std::cout << "Oppss! Seems like you ran out of Hit/Energy Points\n";
-    std::cout << "ClapTrap " << _name << " repairs by " << amount << " and gains " << _hitPoints << " points of health!" << std::endl;
-
+        return ;
+    }
     _hitPoints = _hitPoints + amount;
     _energyPoints += 1;
+    std::cout << "ClapTrap " << _name << " repairs by " << amount << " and gains " 
+                            << _hitPoints << " points of health!" << std::endl;
 }

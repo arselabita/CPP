@@ -15,7 +15,7 @@ a.attack("Hidri");
 
 std::cout << "\n\n jemi ketu \n\n";
     std::cout << "Attack Points Before: " << a.getAttack() << std::endl;
-    a.takeDamage(4);
+    a.takeDamage(15);
     std::cout << "Attack Points After: " << a.getAttack() << std::endl;
     a.beRepaired(2);
 
