@@ -1,52 +1,54 @@
 #include "ClapTrap.hpp"
+#include "ScavTrap.hpp"
 
 int main()
 {
-    ClapTrap first;
-    std::cout << "\n";
-    std::cout << "\n";
 
-    ClapTrap a("Arsela");
-    a.attack("Hidri");
-   
-    a.takeDamage(2);
+    std::cout << "Constructors" << std::endl;
 
-    a.attack("Hidri");
-    a.attack("Hidri");
-    a.attack("Hidri");
+    ClapTrap clap("Clappy");
+    clap.attack("Enemy");
+    clap.takeDamage(3);
+    clap.beRepaired(2);
 
-    a.takeDamage(15);
-    a.beRepaired(2);
+    std::cout << "---------------------------" << std::endl;
+    std::cout << "ScavTrap" << std::endl;
 
-    a.beRepaired(2);
+    ScavTrap scav("Guardian");
+    scav.attack("Enemy1");
+    scav.takeDamage(30);
+    scav.beRepaired(10);
+    scav.guardGate();
 
-    std::cout << "\n";
+    std::cout << "---------------------------" << std::endl;
+    std::cout << "ScavTrap: Testing ATTACK" << std::endl;
 
-    std::cout << "Copy assignment\n";
+    for (int i = 0; i < 30; i++)
+        scav.attack("Dummy");
 
-    ClapTrap b;
-    a = b;
+    std::cout << "---------------------------" << std::endl;
+    std::cout << "ScavTrap: Testing HIT POINTS" << std::endl;
 
-    b.attack("Arsela");
-    b.attack("You");
-    b.beRepaired(1);
-    b.takeDamage(4);
+    scav.takeDamage(150);
+    scav.attack("Dummy");
+    scav.beRepaired(5);
 
-    std::cout << "\n";
+    std::cout << "---------------------------" << std::endl;
+    std::cout << "ScavTrap: Testing COPY CONSTRUCTORS" << std::endl;
 
-    std::cout << "Copy obj\n";
-    ClapTrap copy(a);
-    copy.attack("Stela");
-    copy.beRepaired(3);
-    copy.attack("Stela");
-    copy.attack("Stela");
-    copy.attack("Stela");
-    copy.attack("Stela");
-    copy.takeDamage(2);
-    copy.takeDamage(2);
-    copy.takeDamage(2);
-    copy.takeDamage(2);
-    std::cout << "\n";
+    ScavTrap copy(scav);
+    copy.attack("CopyTarget");
+    copy.guardGate();
+
+    std::cout << "---------------------------" << std::endl;
+    std::cout << "ScavTrap: Testing ASSIGNMENT OP" << std::endl;
+
+    ScavTrap assignment("Temp");
+    assignment = copy;
+
+    assignment.attack("AssignmentTarget");
+    assignment.guardGate();
+    std::cout << "---------------------------" << std::endl;
 
     return 0;
 }

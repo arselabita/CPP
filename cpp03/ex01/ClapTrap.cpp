@@ -1,21 +1,29 @@
 #include "ClapTrap.hpp"
 
-ClapTrap::ClapTrap(void)
+ClapTrap::ClapTrap()
 {
     std::cout << "Base Class default constructor called" << std::endl;
+    _name = "nope";
+    _hitPoints = 10;
+    _energyPoints = 10;
+    _attackDamage = 0;
 }
-ClapTrap::ClapTrap(const std::string &name, unsigned int hP, unsigned int eP, unsigned int aD) : _name("nope"), _hitPoints(10), _energyPoints(10), _attackDamage(0)
-{
-    std::cout << "Base Class default constructor called" << std::endl;
-}
-ClapTrap::ClapTrap(const std::string &name) : _name(name)
+ClapTrap::ClapTrap(const std::string &name)
 {
     std::cout << "Base Class constructor called" << std::endl;
+    _name = name;
+    _hitPoints = 10;
+    _energyPoints = 10;
+    _attackDamage = 0;
 }
-ClapTrap::ClapTrap(const ClapTrap &original) : _name(original._name), _hitPoints(original._hitPoints),
-                                               _energyPoints(original._energyPoints), _attackDamage(original._attackDamage)
+
+ClapTrap::ClapTrap(const ClapTrap &original)
 {
     std::cout << "Base Class copy constructor called" << std::endl;
+    _name = original._name;
+    _hitPoints = original._hitPoints;
+    _energyPoints = original._energyPoints;
+    _attackDamage = original._attackDamage;
 }
 
 ClapTrap &ClapTrap::operator=(const ClapTrap &original)
@@ -31,16 +39,21 @@ ClapTrap &ClapTrap::operator=(const ClapTrap &original)
     return *this;
 }
 
-ClapTrap::~ClapTrap(void)
+ClapTrap::~ClapTrap()
 {
     std::cout << "Base Class destructor called" << std::endl;
 }
 
 void ClapTrap::attack(const std::string &target)
 {
-    if (_hitPoints == 0 || _energyPoints == 0)
+    if (_hitPoints < 1)
     {
-        std::cout << "Oppss! Seems like you ran out of Hit/Energy Points\n";
+        std::cout << "Oppss! Seems like you ran out of Hit Points" << std::endl;
+        return;
+    }
+    if (_energyPoints < 1)
+    {
+        std::cout << "Oppss! Seems like you ran out of Energy Points" << std::endl;
         return;
     }
     _energyPoints -= 1;
@@ -50,12 +63,12 @@ void ClapTrap::attack(const std::string &target)
 
 void ClapTrap::takeDamage(unsigned int amount)
 {
-    if (_hitPoints == 0)
+    if (_hitPoints < 1)
     {
-        std::cout << "Oppss! Seems like you ran out of hit points!\n";
+        std::cout << "Oppss! Seems like you ran out of hit points!" << std::endl;
         return;
     }
-    if (amount > _hitPoints)
+    if (_hitPoints <= amount)
     {
         _hitPoints = 0;
         std::cout << "ClapTrap " << _name << " takes " << amount
@@ -69,9 +82,14 @@ void ClapTrap::takeDamage(unsigned int amount)
 
 void ClapTrap::beRepaired(unsigned int amount)
 {
-    if (_hitPoints == 0 || _energyPoints == 0)
+    if (_hitPoints < 1)
     {
-        std::cout << "Oppss! Seems like you ran out of Hit/Energy Points\n";
+        std::cout << "Oppss! Seems like you ran out of Hit Points" << std::endl;
+        return;
+    }
+    if (_energyPoints < 1)
+    {
+        std::cout << "Oppss! Seems like you ran out of Energy Points" << std::endl;
         return;
     }
     _hitPoints = _hitPoints + amount;

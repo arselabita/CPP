@@ -1,20 +1,30 @@
 #include "ScavTrap.hpp"
 
-ScavTrap::ScavTrap(void)
+ScavTrap::ScavTrap() : ClapTrap()
 {
-    std::cout << "Derived class default constructor called\n";
+    std::cout << "Derived ScavTrap class default constructor called" << std::endl;
+    _name = "nope";
+    _hitPoints = 100;
+    _energyPoints = 50;
+    _attackDamage = 20;
 }
-ScavTrap::ScavTrap(const std::string &name) : ClapTrap(name, 100, 50, 20)
+ScavTrap::ScavTrap(const std::string &name) : ClapTrap(name)
 {
-    std::cout << "Derived class constructor called\n";
+    std::cout << "Derived ScavTrap class constructor called" << std::endl;
+    _name = name;
+    _hitPoints = 100;
+    _energyPoints = 50;
+    _attackDamage = 20;
 }
-ScavTrap::ScavTrap(const ScavTrap &original) : ClapTrap(original._name, original._hitPoints, original._energyPoints, original._attackDamage)
+
+ScavTrap::ScavTrap(const ScavTrap &original) : ClapTrap(original)
 {
-    std::cout << "Derived class copy constructor called" << std::endl;
+    (void)original;
+    std::cout << "Derived ScavTrap class copy constructor called" << std::endl;
 }
 ScavTrap &ScavTrap::operator=(const ScavTrap &original)
 {
-    std::cout << "Derived class copy assignment operator called\n";
+    std::cout << "Derived ScavTrap class copy assignment operator called" << std::endl;
     if (this != &original)
     {
         this->_name = original._name;
@@ -26,14 +36,19 @@ ScavTrap &ScavTrap::operator=(const ScavTrap &original)
 }
 ScavTrap::~ScavTrap(void)
 {
-    std::cout << "Derived class destructor called\n";
+    std::cout << "Derived ScavTrap class destructor called" << std::endl;
 }
 
 void ScavTrap::attack(const std::string &target)
 {
-    if (_hitPoints == 0 || _energyPoints == 0)
+    if (_hitPoints < 1)
     {
-        std::cout << "Oppss! Seems like you ran out of Hit/Energy Points\n";
+        std::cout << "Oppss! Seems like you ran out of Hit Points" << std::endl;
+        return;
+    }
+    if (_energyPoints < 1)
+    {
+        std::cout << "Oppss! Seems like you ran out of Energy Points" << std::endl;
         return;
     }
     _energyPoints -= 1;
@@ -42,5 +57,5 @@ void ScavTrap::attack(const std::string &target)
 }
 void ScavTrap::guardGate(void)
 {
-    std::cout << "ScavTrap is now in Gate keeper mode\n";
+    std::cout << "ScavTrap " << _name << " is now in Gate keeper mode" << std::endl;
 }

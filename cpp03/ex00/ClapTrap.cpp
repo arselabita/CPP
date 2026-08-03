@@ -1,19 +1,34 @@
 #include "ClapTrap.hpp"
 
-ClapTrap::ClapTrap(void) : _name("nope"), _hitPoints(10), _energyPoints(10), _attackDamage(0)
+ClapTrap::ClapTrap()
 {
-    std::cout << "Default constructor called" << std::endl;
+    std::cout << "ClapTrap default constructor called" << std::endl;
+    _name = "nope";
+    _hitPoints = 10;
+    _energyPoints = 10;
+    _attackDamage = 0;
+}
+ClapTrap::ClapTrap(const std::string &name)
+{
+    std::cout << "ClapTrap constructor called" << std::endl;
+    _name = name;
+    _hitPoints = 10;
+    _energyPoints = 10;
+    _attackDamage = 0;
 }
 
-ClapTrap::ClapTrap(const ClapTrap &original) : _name(original._name), _hitPoints(original._hitPoints),
-                                               _energyPoints(original._energyPoints), _attackDamage(original._attackDamage)
+ClapTrap::ClapTrap(const ClapTrap &original)
 {
-    std::cout << "Copy constructor called" << std::endl;
+    std::cout << "ClapTrap copy constructor called" << std::endl;
+    _name = original._name;
+    _hitPoints = original._hitPoints;
+    _energyPoints = original._energyPoints;
+    _attackDamage = original._attackDamage;
 }
 
 ClapTrap &ClapTrap::operator=(const ClapTrap &original)
 {
-    std::cout << "Copy assignment operator called" << std::endl;
+    std::cout << "ClapTrap copy assignment operator called" << std::endl;
     if (this != &original)
     {
         this->_name = original._name;
@@ -24,54 +39,58 @@ ClapTrap &ClapTrap::operator=(const ClapTrap &original)
     return *this;
 }
 
-ClapTrap::~ClapTrap(void)
+ClapTrap::~ClapTrap()
 {
-    std::cout << "Destructor called" << std::endl;
-}
-
-ClapTrap::ClapTrap(const std::string &name) : _name(name),
-                                            _hitPoints(10), _energyPoints(10), _attackDamage(0)
-{
-    std::cout << "Constructor called\n";
+    std::cout << "ClapTrap destructor called" << std::endl;
 }
 
 void ClapTrap::attack(const std::string &target)
 {
-    if (_hitPoints == 0 || _energyPoints == 0)
-    { 
-        std::cout << "Oppss! Seems like you ran out of Hit/Energy Points\n";
+    if (_hitPoints < 1)
+    {
+        std::cout << "Oppss! Seems like you ran out of Hit Points" << std::endl;
+        return;
+    }
+    if (_energyPoints < 1)
+    {
+        std::cout << "Oppss! Seems like you ran out of Energy Points" << std::endl;
         return;
     }
     _energyPoints -= 1;
-    std::cout << "ClapTrap " << _name << " attacks " << target << " , causing " 
-                            << _attackDamage << " points of damage!" << std::endl;
+    std::cout << "ClapTrap " << _name << " attacks " << target << " , causing "
+              << _attackDamage << " points of damage!" << std::endl;
 }
 
 void ClapTrap::takeDamage(unsigned int amount)
 {
-    if (_hitPoints == 0)
+    if (_hitPoints < 1)
     {
-        std::cout << "Oppss! Seems like you ran out of hit points!\n";
-        return ;
+        std::cout << "Oppss! Seems like you ran out of hit points!" << std::endl;
+        return;
     }
-    if (amount > _hitPoints)
+    if (_hitPoints <= amount)
     {
         _hitPoints = 0;
-        std::cout << "ClapTrap " << _name << " takes " << amount 
-                << " points of damage, reducing its hit points to " << _hitPoints << std::endl;
-        return ;
+        std::cout << "ClapTrap " << _name << " takes " << amount
+                  << " points of damage, reducing its hit points to " << _hitPoints << std::endl;
+        return;
     }
     _hitPoints = _hitPoints - amount;
-    std::cout << "ClapTrap received a damage of " << amount 
-                << " , decreasing hit points to " << _hitPoints << std::endl;
+    std::cout << "ClapTrap received a damage of " << amount
+              << " , decreasing hit points to " << _hitPoints << std::endl;
 }
 
 void ClapTrap::beRepaired(unsigned int amount)
 {
-    if (_hitPoints == 0 || _energyPoints == 0)
+    if (_hitPoints < 1)
     {
-        std::cout << "Oppss! Seems like you ran out of Hit/Energy Points\n";
-        return ;
+        std::cout << "Oppss! Seems like you ran out of Hit Points" << std::endl;
+        return;
+    }
+    if (_energyPoints < 1)
+    {
+        std::cout << "Oppss! Seems like you ran out of Energy Points" << std::endl;
+        return;
     }
     _hitPoints = _hitPoints + amount;
     _energyPoints -= 1;
