@@ -13,7 +13,7 @@ void Dog::setType(std::string type)
 {
     this->_type = type;
 }
-void Dog::makeSound()
+void Dog::makeSound() const
 {
     std::cout << "The dog barks" << std::endl;
 }

@@ -10,6 +10,6 @@ public:
     ~Dog();
 
     void setType(std::string type);
-    void makeSound() const override;
+    void makeSound() const;
 };
 #endif

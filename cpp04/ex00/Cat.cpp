@@ -13,7 +13,7 @@ void Cat::setType(std::string type)
 {
     this->_type = type;
 }
-void Cat::makeSound() const override
+void Cat::makeSound() const
 {
     std::cout << "The cat meaws" << std::endl;
 }
