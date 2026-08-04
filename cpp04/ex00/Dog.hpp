@@ -7,9 +7,10 @@ class Dog : public Animal
 {
 public:
     Dog();
+    Dog(const Dog &original);
+    Dog &operator=(const Dog &original);
     ~Dog();
 
-    void setType(std::string type);
     void makeSound() const;
 };
 #endif

@@ -2,18 +2,24 @@
 
 Cat::Cat()
 {
+    this->_type = "Cat";
     std::cout << "Cat Default Constructor Called" << std::endl;
+}
+Cat::Cat(const Cat &original) : Animal(original)
+{
+    std::cout << "Cat Copy Constructor Called" << std::endl;
+}
+Cat& Cat::operator=(const Cat &original)
+{
+    Animal::operator=(original);
+    std::cout << "Cat Copy Operator Overload Called" << std::endl;
+    return *this;
 }
 Cat::~Cat()
 {
     std::cout << "Cat Destructor Called" << std::endl;
 }
-
-void Cat::setType(std::string type)
-{
-    this->_type = type;
-}
 void Cat::makeSound() const
 {
-    std::cout << "The cat meaws" << std::endl;
+    std::cout << "Meaw Meaw Meaw" << std::endl;
 }
