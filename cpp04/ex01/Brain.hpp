@@ -12,7 +12,7 @@ public:
     Brain &operator=(const Brain &original);
     ~Brain();
 
-    void setIdea(int index, const std::string ideas);
+    void setIdea(const std::string ideas);
     const std::string& getIdea() const;
 
 private:
