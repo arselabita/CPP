@@ -29,10 +29,12 @@ Brain::~Brain()
 
 const std::string &Brain::getIdea(int index) const
 {
-   return _ideas[index];
+    return _ideas[index];
 }
 
-void Brain::setIdea(int index, std::string& idea)
+void Brain::setIdea(int index, const std::string &idea)
 {
-    this->_ideas[index] = idea;
+    if (index >= 0 && index < 100)
+        this->_ideas[index] = idea;
+    return ;
 }

@@ -20,7 +20,7 @@ Dog &Dog::operator=(const Dog &original)
     {
         Animal::operator=(original);
         *this->_brain = *(original._brain);
-    }    
+    }
     std::cout << "Dog Copy Operator Overload Called" << std::endl;
     return *this;
 }
@@ -36,11 +36,11 @@ void Dog::makeSound() const
     std::cout << "bark bark bark" << std::endl;
 }
 
-void Dog::setIdea(int index, std::string& ideas)
+void Dog::setIdea(int index, const std::string &ideas)
 {
     _brain->setIdea(index, ideas);
 }
 const std::string &Dog::getIdea(int index) const
 {
-    _brain->getIdea(index);
+    return _brain->getIdea(index);
 }
