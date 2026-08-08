@@ -2,7 +2,7 @@
 
 WrongAnimal::WrongAnimal()
 {
-    this->_type = "";
+    this->_type = "nope";
     std::cout << "WrongAnimal Default Constructor Called" << std::endl;
 }
 WrongAnimal::WrongAnimal(const WrongAnimal &original)

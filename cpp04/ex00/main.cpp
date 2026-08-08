@@ -3,36 +3,40 @@
 #include "Cat.hpp"
 #include "WrongAnimal.hpp"
 #include "WrongCat.hpp"
-#include "WrongDog.hpp"
-
 
 int main()
 {
-const Animal* meta = new Animal();
-const Animal* j = new Dog();
-const Animal* i = new Cat();
+    std::cout << BOLD << CYAN << "\nTEST 1: POLYMORPHISM\n\n"
+              << RESET;
+    {
+        const Animal *meta = new Animal();
+        const Animal *cat = new Cat();
+        const Animal *dog = new Dog();
 
-std::cout << j->getType() << " " << std::endl;
-std::cout << i->getType() << " " << std::endl;
-i->makeSound(); //will output the cat sound!
-j->makeSound();
-meta->makeSound();
+        std::cout << "Cat type: " << cat->getType() << " " << std::endl;
+        std::cout << "Dog type: " << dog->getType() << " " << std::endl;
 
-const WrongAnimal* s = new WrongCat();
-const WrongCat* w = new WrongCat();
-const WrongDog* z = new WrongDog();
+        cat->makeSound();
+        dog->makeSound();
+        meta->makeSound();
 
-std::cout << w->getType() << " " << std::endl;
-std::cout << z->getType() << " " << std::endl;
-z->makeSound();
-w->makeSound();
-s->makeSound();
+        delete (dog);
+        delete (cat);
+        delete (meta);
+    }
+    std::cout << BOLD << GREEN << "\nTEST 2: WRONG POLYMORPHISM\n\n"
+              << RESET;
+    {
+        const WrongAnimal *animal = new WrongAnimal();
+        const WrongAnimal *cat = new WrongCat();
 
-delete (meta);
-delete (i);
-delete (j);
-delete (w);
-delete (z);
-delete (s);
-return 0;
+        std::cout << "Wrong cat type: " << cat->getType() << " " << std::endl;
+
+        animal->makeSound();
+        cat->makeSound();
+
+        delete (cat);
+        delete (animal);
+    }
+    return 0;
 }

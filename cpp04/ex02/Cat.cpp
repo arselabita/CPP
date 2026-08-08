@@ -1,10 +1,9 @@
 #include "Cat.hpp"
 
-Cat::Cat()
+Cat::Cat() : Animal()
 {
-    this->_type = "Cat";
+    this->_type = "British";
     this->_brain = new Brain();
-
     std::cout << "Cat Default Constructor Called" << std::endl;
 }
 Cat::Cat(const Cat &original) : Animal(original)

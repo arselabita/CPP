@@ -1,6 +1,6 @@
 #include "WrongCat.hpp"
 
-WrongCat::WrongCat()
+WrongCat::WrongCat() : WrongAnimal()
 {
     this->_type = "WrongCat";
     std::cout << "WrongCat Default Constructor Called" << std::endl;
@@ -11,7 +11,8 @@ WrongCat::WrongCat(const WrongCat &original) : WrongAnimal(original)
 }
 WrongCat &WrongCat::operator=(const WrongCat &original)
 {
-    WrongAnimal::operator=(original);
+    if (this != &original)
+        WrongAnimal::operator=(original);
     std::cout << "WrongCat Copy Operator Overload Called" << std::endl;
     return *this;
 }

@@ -1,8 +1,8 @@
 #include "Cat.hpp"
 
-Cat::Cat()
+Cat::Cat() : Animal()
 {
-    this->_type = "Cat";
+    this->_type = "Rag Doll";
     std::cout << "Cat Default Constructor Called" << std::endl;
 }
 Cat::Cat(const Cat &original) : Animal(original)
@@ -11,7 +11,8 @@ Cat::Cat(const Cat &original) : Animal(original)
 }
 Cat& Cat::operator=(const Cat &original)
 {
-    Animal::operator=(original);
+    if (this != &original)
+        Animal::operator=(original);
     std::cout << "Cat Copy Operator Overload Called" << std::endl;
     return *this;
 }

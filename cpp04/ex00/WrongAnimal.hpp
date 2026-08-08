@@ -1,5 +1,4 @@
-#ifndef WRONGANIMAL_HPP
-#define WRONGANIMAL_HPP
+#pragma once
 
 #include <iostream>
 #include <string>
@@ -10,13 +9,11 @@ public:
     WrongAnimal();
     WrongAnimal(const WrongAnimal &original);
     WrongAnimal &operator=(const WrongAnimal &original);
-    virtual ~WrongAnimal();
+    ~WrongAnimal();
 
     const std::string getType() const;
-    virtual void makeSound() const;
+    void makeSound() const;
 
 protected:
     std::string _type;
 };
-
-#endif

@@ -1,8 +1,8 @@
 #include "Dog.hpp"
 
-Dog::Dog()
+Dog::Dog() : Animal()
 {
-    this->_type = "Dog";
+    this->_type = "Akita Inu";
     std::cout << "Dog Default Constructor Called" << std::endl;
 }
 
@@ -13,7 +13,8 @@ Dog::Dog(const Dog &original) : Animal(original)
 
 Dog &Dog::operator=(const Dog &original)
 {
-    Animal::operator=(original);
+    if (this != &original)
+        Animal::operator=(original);
     std::cout << "Dog Copy Operator Overload Called" << std::endl;
     return *this;
 }

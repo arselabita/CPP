@@ -1,13 +1,11 @@
 #include "Animal.hpp"
 
-Animal::Animal()
+Animal::Animal() : _type("nope")
 {
-    this->_type = "nope";
     std::cout << "Animal Default Constructor Called" << std::endl;
 }
-Animal::Animal(const Animal &original)
+Animal::Animal(const Animal &original) : _type(original._type)
 {
-    this->_type = original._type;
     std::cout << "Animal Copy Constructor Called" << std::endl;
 }
 Animal& Animal::operator=(const Animal &original)
