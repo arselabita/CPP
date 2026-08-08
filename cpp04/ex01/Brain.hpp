@@ -1,5 +1,4 @@
-#ifndef BRAIN_HPP
-#define BRAIN_HPP
+#pragma once
 
 #include <string>
 #include <iostream>
@@ -18,5 +17,3 @@ public:
 private:
     std::string _ideas[100];
 };
-
-#endif
