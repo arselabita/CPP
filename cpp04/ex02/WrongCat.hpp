@@ -11,7 +11,4 @@ public:
     ~WrongCat();
 
     void makeSound() const;
-
-protected:
-    std::string _type;
 };
