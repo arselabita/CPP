@@ -2,7 +2,7 @@
 
 Dog::Dog() : Animal()
 {
-    this->_type = "Akita Inu";
+    this->_type = "Weimaraner";
     this->_brain = new Brain();
     std::cout << "Dog Default Constructor Called" << std::endl;
 }
