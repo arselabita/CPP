@@ -3,12 +3,26 @@
 Cat::Cat() : Animal()
 {
     this->_type = "British Short Hair";
-    this->_brain = new Brain();
+    try
+    {
+        this->_brain = new Brain();
+    }
+    catch (const std::bad_alloc& e)
+    {
+        std::cerr << "Memory allocation failed: " << e.what() << std::endl; 
+    }
     std::cout << "Cat Default Constructor Called" << std::endl;
 }
 Cat::Cat(const Cat &original) : Animal(original)
 {
-    this->_brain = new Brain();
+    try
+    {
+        this->_brain = new Brain();
+    }
+    catch (const std::bad_alloc& e)
+    {
+        std::cerr << "Memory allocation failed: " << e.what() << std::endl; 
+    }
     *(this->_brain) = *(original._brain);
     std::cout << "Cat Copy Constructor Called" << std::endl;
 }
