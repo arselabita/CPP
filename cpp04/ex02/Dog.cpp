@@ -2,14 +2,27 @@
 
 Dog::Dog() : Animal()
 {
-    this->_type = "Akita Inu";
-    this->_brain = new Brain();
+    this->_type = "Weimaraner";
+    try
+    {
+        this->_brain = new Brain();
+    }
+    catch (const std::bad_alloc& e)
+    {
+        std::cerr << "Memory allocation failed: " << e.what() << std::endl; 
+    }
     std::cout << "Dog Default Constructor Called" << std::endl;
 }
 Dog::Dog(const Dog &original) : Animal(original)
 {
-    this->_brain = new Brain();
-    *this->_brain = *(original._brain);
+    try
+    {
+        this->_brain = new Brain();
+    }
+    catch (const std::bad_alloc& e)
+    {
+        std::cerr << "Memory allocation failed: " << e.what() << std::endl; 
+    }    *this->_brain = *(original._brain);
     std::cout << "Dog Copy Constructor Called" << std::endl;
 }
 Dog &Dog::operator=(const Dog &original)
