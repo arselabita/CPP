@@ -2,6 +2,16 @@
 
 #include <string>
 #include <iostream>
+#include <exception>
+
+#define RESET   "\033[0m"
+#define RED     "\033[31m"
+#define GREEN   "\033[32m"
+#define YELLOW  "\033[33m"
+#define BLUE    "\033[34m"
+#define MAGENTA "\033[35m"
+#define CYAN    "\033[36m"
+#define BOLD    "\033[1m"
 
 class Bureaucrat
 {
@@ -11,9 +21,20 @@ public:
     Bureaucrat(const Bureaucrat &original);
     Bureaucrat &operator=(const Bureaucrat &original);
     ~Bureaucrat();
+    class GradeTooHighException : public std::exception
+    {
+    public:
+        virtual const char *what() const throw() { return "The grade is too high!"; }
+    };
 
-    const std::string getName() const;
-    const int getGrade() const;
+    class GradeTooLowException : public std::exception
+    {
+    public:
+        virtual const char *what() const throw() { return "The grade is too low!"; }
+    };
+
+    const std::string &getName() const;
+    int getGrade() const;
 
     void incrementGrade();
     void decrementGrade();

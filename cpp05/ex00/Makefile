@@ -3,7 +3,7 @@ NAME = bureaucrat
 CXX = c++
 CXX_FLAGS = -Wall -Werror -Wextra -std=c++98
 
-SRCS = main.cpp
+SRCS = main.cpp Bureaucrat.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 SILENT ?=0
