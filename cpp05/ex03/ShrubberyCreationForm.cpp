@@ -26,7 +26,7 @@ void ShrubberyCreationForm::execute(Bureaucrat const &executor) const
 {
     AForm::execute(executor);
     std::string fileName = _target + "_shrubbery";
-    std::cout << "the filename is: " << fileName << std::endl;
+    std::cout << "The filename is: " << fileName << std::endl;
 
     std::ofstream file(fileName);
     if (!file.is_open())
