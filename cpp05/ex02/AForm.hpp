@@ -38,7 +38,6 @@ public:
 
     void beSigned(const Bureaucrat &bureaucrat);
 
-    void executeForms(); // implement a function to execute the form’s action in the concrete classes
     virtual void execute(Bureaucrat const & executor) const = 0;
 
 private:

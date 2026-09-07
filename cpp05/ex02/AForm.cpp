@@ -54,13 +54,14 @@ void AForm::execute(Bureaucrat const &executor) const
 {
     if (this->getSign() == false)
         throw AForm::FormNotSigned();
-    if(executor.getGrade() > this->_executeGrade)
+    if (executor.getGrade() > this->_executeGrade)
         throw AForm::GradeTooLowException();
-    executeForm();
+    // executeForm();
 }
 
 std::ostream &operator<<(std::ostream &out, const AForm &obj)
 {
-    out << obj.getName() << ", AForm signed grade " << obj.getSignedGrade() << ", AForm execute grade " << obj.getExecuteGrade() << ", the AForm sign status " << (obj.getSign() ? "signed" : "unsigned") << std::endl;
+    out << obj.getName() << ", AForm signed grade: " << obj.getSignedGrade() << ",\n AForm execute grade: "
+        << obj.getExecuteGrade() << ",\n the AForm sign status: " << (obj.getSign() ? "signed" : "unsigned") << std::endl;
     return out;
 }
