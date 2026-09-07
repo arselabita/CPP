@@ -36,6 +36,7 @@ clean:
 
 fclean:
 	@rm -f $(NAME) $(OBJS)
+	@rm -f *_shrubbery 
 
 re: fclean all
 
