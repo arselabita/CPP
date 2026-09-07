@@ -19,18 +19,19 @@ public:
     class GradeTooHighException : public std::exception
     {
     public:
-        virtual const char *what() const throw() { return "Grade too high!"; }
+        virtual const char *what() const throw();
     };
     class GradeTooLowException : public std::exception
     {
     public:
-        virtual const char *what() const throw() { return "Grade too low!"; }
+        virtual const char *what() const throw();
     };
     class FormNotSigned : public std::exception
     {
     public:
-        virtual const char *what() const throw() { return "The form is not signed!"; }
+        virtual const char *what() const throw();
     };
+    
     const std::string &getName() const;
     int getSignedGrade() const;
     int getExecuteGrade() const;

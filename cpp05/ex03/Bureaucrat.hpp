@@ -22,16 +22,16 @@ public:
     Bureaucrat(const Bureaucrat &original);
     Bureaucrat &operator=(const Bureaucrat &original);
     ~Bureaucrat();
+
     class GradeTooHighException : public std::exception
     {
     public:
-        virtual const char *what() const throw() { return "The grade is too high!"; }
+        virtual const char *what() const throw();
     };
-
     class GradeTooLowException : public std::exception
     {
     public:
-        virtual const char *what() const throw() { return "The grade is too low!"; }
+        virtual const char *what() const throw();
     };
 
     const std::string &getName() const;
