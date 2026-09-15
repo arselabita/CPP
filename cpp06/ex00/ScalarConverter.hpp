@@ -16,7 +16,6 @@ enum LiteralType{
     INT,
     FLOAT,
     DOUBLE,
-    PSEUDO,
     INVALID
 };
 
@@ -33,8 +32,7 @@ private:
 
     static LiteralType detectType(const std::string &strType);
     static void parseValue(const std::string &strInput, LiteralType type);
-    static void castValues(int number);
-    static void printValue(char chValue, int iValue, float fValue, double dValue);
+    static void castValues(long int number);
 
     static bool isInt(const std::string &valRep);
     static bool isChar(const std::string &valRep);

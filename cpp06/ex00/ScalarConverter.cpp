@@ -2,10 +2,7 @@
 
 void showError(const std::string &errorStr)
 {
-    std::cerr << RED << "\n"
-              << errorStr << RESET;
-    std::cerr << "\n"
-              << std::string(50, '-') << "\n";
+    std::cerr << RED << errorStr << RESET << std::endl;
 }
 
 bool ScalarConverter::isInt(const std::string &strInput)
@@ -27,47 +24,44 @@ bool ScalarConverter::isInt(const std::string &strInput)
     }
     return true;
 }
-
+bool ScalarConverter::isChar(const std::string &strInput)
+{
+    if (strInput.empty())
+        return false;
+    if (strInput.length() == 1 && !std::isdigit(strInput[0]))
+        return true;
+    if (strInput.length() == 3 && strInput[0] == '\'' && strInput[2] == '\'')
+        return true;
+    return false;
+}
 LiteralType ScalarConverter::detectType(const std::string &strInput)
 {
-    // if (isChar(strInput))
-    //     return CHAR;
+    if (isChar(strInput))
+        return CHAR;
     if (isInt(strInput))
         return INT;
     // if (isFloat(strInput))
     //     return FLOAT;
     // if (isDouble(strInput))
     //     return DOUBLE;
-    // if (isPseudo(strInput))
-    //     return PSEUDO;
     return INVALID;
 }
-// void ScalarConverter::printValue(char chValue, int iValue, float fValue, double dValue)
-// {
 
-//     std::cout << "float: " << fValue << std::endl;
-//     std::cout << "double: " << dValue << std::endl;
-// }
-void ScalarConverter::castValues(int number)
+void ScalarConverter::castValues(long int number)
 {
-    if (number <= std::numeric_limits<int>::max() && number >= std::numeric_limits<int>::min())
-    {
-        int iValue = static_cast<int>(number);
-        std::cout << "int: " << iValue << std::endl;
-    }
-    else
-        std::cout << "int: impossible" << std::endl;
-
-    char chValue = static_cast<char>(number);
-    if (chValue < 0 || chValue > 127)
+    if (number < 0 || number > 127)
         std::cout << "char: impossible" << std::endl;
     else
     {
+        char chValue = static_cast<char>(number);
         if (std::isprint(chValue))
-            std::cout << "char: " << chValue << std::endl;
+            std::cout << "char: '" << chValue << "'" << std::endl;
         else
             std::cout << "char: not displayable" << std::endl;
     }
+
+    int iValue = static_cast<int>(number);
+    std::cout << "int: " << iValue << std::endl;
 
     if (number >= std::numeric_limits<float>::lowest() && number <= std::numeric_limits<float>::max())
     {
@@ -84,26 +78,41 @@ void ScalarConverter::castValues(int number)
     }
     else
         std::cout << "double: impossible" << std::endl;
-    // printValue(chValue, iValue, fValue, dValue);
 }
 void ScalarConverter::parseValue(const std::string &strInput, LiteralType type)
 {
-    char *endptr;
-    int number = 0;
+
     switch (type)
     {
-    // case CHAR:
-    //     /* code */
-    //     break;
+    case CHAR:
+    {
+        char ch;
+        if (strInput.length() == 3 && strInput[0] == '\'' && strInput[2] == '\'')
+            ch = strInput[1];
+        else
+            ch = strInput[0];
+        castValues(static_cast<int>(ch));
+    }
+    break;
     case INT:
+    {
+        errno = 0;
+        char *endptr;
+        long number;
         number = strtol(strInput.c_str(), &endptr, 10);
-        if (*endptr != '\0')
+        if (strInput.c_str() == endptr || *endptr != '\0')
         {
-            std::cerr << "Conversion stopped at: " << endptr << std::endl;
+            std::cerr << "Invalid integer format!" << std::endl;
             break;
         }
-        castValues(number);
+        if (errno == ERANGE || number > INT_MAX || number < INT_MIN)
+        {
+            std::cerr << "Integer out of bounds!" << std::endl;
+            break;
+        }
+        castValues(static_cast<int>(number));
         break;
+    }
     // case FLOAT:
     //     break;
     // case DOUBLE:
