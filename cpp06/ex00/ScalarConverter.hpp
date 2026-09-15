@@ -7,8 +7,11 @@
 #include <string>
 #include <iostream>
 #include <limits>
+#include <cfloat>
 #include <cctype> // covers a range of functions, also std::isprint() to cover besides letters also special chars
-#include <cstdlib> 
+#include <cstdlib>
+#include <cerrno>
+#include <iomanip>
 #include <exception>
 
 enum LiteralType{
@@ -16,6 +19,7 @@ enum LiteralType{
     INT,
     FLOAT,
     DOUBLE,
+    PSEUDO,
     INVALID
 };
 
@@ -32,7 +36,7 @@ private:
 
     static LiteralType detectType(const std::string &strType);
     static void parseValue(const std::string &strInput, LiteralType type);
-    static void castValues(long int number);
+    static void castValues(double number);
 
     static bool isInt(const std::string &valRep);
     static bool isChar(const std::string &valRep);
