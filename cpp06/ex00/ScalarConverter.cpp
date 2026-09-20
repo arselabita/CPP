@@ -1,8 +1,38 @@
 #include "ScalarConverter.hpp"
 
+ScalarConverter::ScalarConverter() {}
+ScalarConverter::ScalarConverter(const ScalarConverter &original)
+{
+    (void)original;
+}
+ScalarConverter &ScalarConverter::operator=(const ScalarConverter &original)
+{
+    (void)original;
+    return *this;
+}
+ScalarConverter::~ScalarConverter() {}
+
 void showError(const std::string &errorStr)
 {
     std::cerr << RED << errorStr << RESET << std::endl;
+}
+bool ScalarConverter::isPseudo(const std::string &strInput)
+{
+    if (strInput.empty())
+        return false;
+    return (strInput == "nan" || strInput == "nanf" ||
+            strInput == "-inff" || strInput == "+inff" ||
+            strInput == "-inf" || strInput == "+inf");
+}
+bool ScalarConverter::isChar(const std::string &strInput)
+{
+    if (strInput.empty())
+        return false;
+    if (strInput.length() == 1 && !std::isdigit(strInput[0]))
+        return true;
+    if (strInput.length() == 3 && strInput[0] == '\'' && strInput[2] == '\'')
+        return true;
+    return false;
 }
 
 bool ScalarConverter::isInt(const std::string &strInput)
@@ -24,25 +54,13 @@ bool ScalarConverter::isInt(const std::string &strInput)
     }
     return true;
 }
-bool ScalarConverter::isChar(const std::string &strInput)
-{
-    if (strInput.empty())
-        return false;
-    if (strInput.length() == 1 && !std::isdigit(strInput[0]))
-        return true;
-    if (strInput.length() == 3 && strInput[0] == '\'' && strInput[2] == '\'')
-        return true;
-    return false;
-}
-
 bool ScalarConverter::isFloat(const std::string &strInput)
 {
     size_t start = 0;
     bool isDot = false;
+    bool hasDigit = false;
 
-    if (strInput.empty())
-        return false;
-    if (strInput[strInput.length() - 1] != 'f')
+    if (strInput.empty() || strInput[strInput.length() - 1] != 'f')
         return false;
     if (strInput[0] == '-' || strInput[0] == '+')
     {
@@ -58,16 +76,19 @@ bool ScalarConverter::isFloat(const std::string &strInput)
                 return false;
             isDot = true;
         }
-        else if (!std::isdigit(strInput[i]))
+        else if (std::isdigit(strInput[i]))
+            hasDigit = true;
+        else
             return false;
     }
-    return isDot;
+    return isDot && hasDigit;
 }
 
 bool ScalarConverter::isDouble(const std::string &strInput)
 {
     size_t start = 0;
     bool isDot = false;
+    bool hasDigit = false;
 
     if (strInput.empty())
         return false;
@@ -85,26 +106,20 @@ bool ScalarConverter::isDouble(const std::string &strInput)
                 return false;
             isDot = true;
         }
-        else if (!std::isdigit(strInput[i]))
+        else if (std::isdigit(strInput[i]))
+            hasDigit = true;
+        else
             return false;
     }
-    return isDot;
-}
-bool ScalarConverter::isPseudo(const std::string &strInput)
-{
-    if (strInput.empty())
-        return false;
-    if (strInput == "nan" || strInput == "nanf" || 
-        strInput == "-inff" || strInput == "+inff" ||
-        strInput == "-inf" || strInput == "+inf")
-            return true;
-    return false;
+    return isDot && hasDigit;
 }
 
 void ScalarConverter::castValues(double number)
 {
+    // To determine if a value is NaN, a comparison of the value to itself is surprisingly effective
+    bool isNan = number != number;
     // char conversion
-    if (number < 0 || number > 127)
+    if (isNan || number < 0 || number > 127)
         std::cout << "char: impossible" << std::endl;
     else if (std::isprint(static_cast<char>(number)))
         std::cout << "char: '" << static_cast<char>(number) << "'" << std::endl;
@@ -112,26 +127,18 @@ void ScalarConverter::castValues(double number)
         std::cout << "char: not displayable" << std::endl;
 
     // int conversion
-    if (number > INT_MAX || number < INT_MIN)
+    if (isNan || number > INT_MAX || number < INT_MIN)
         std::cout << "int: impossible" << std::endl;
     else
         std::cout << "int: " << static_cast<int>(number) << std::endl;
-
     // float conversion
-    if (number >= std::numeric_limits<float>::lowest() && number <= std::numeric_limits<float>::max())
-        std::cout << "float: " << std::fixed << std::setprecision(1) << static_cast<float>(number) << "f" << std::endl;
-    else
-        std::cout << "float: impossible" << std::endl;
-
+    std::cout << std::fixed << std::setprecision(1);
+    std::cout << "float: " << static_cast<float>(number) << "f" << std::endl;
     // double conversion
-    if (number >= std::numeric_limits<double>::lowest() && number <= std::numeric_limits<double>::max())
-        std::cout << "double: " << std::fixed << std::setprecision(1) << static_cast<double>(number) << std::endl;
-    else
-        std::cout << "double: impossible" << std::endl;
+    std::cout << "double: " << static_cast<double>(number) << std::endl;
 }
 void ScalarConverter::parseValue(const std::string &strInput, LiteralType type)
 {
-
     switch (type)
     {
     case CHAR:
@@ -141,7 +148,7 @@ void ScalarConverter::parseValue(const std::string &strInput, LiteralType type)
             ch = strInput[1];
         else
             ch = strInput[0];
-        castValues(static_cast<float>(ch));
+        castValues(static_cast<double>(ch));
     }
     break;
     case INT:
@@ -160,7 +167,7 @@ void ScalarConverter::parseValue(const std::string &strInput, LiteralType type)
             errno = 0;
             break;
         }
-        castValues(static_cast<float>(number));
+        castValues(static_cast<double>(number));
         break;
     }
     case FLOAT:
@@ -204,12 +211,16 @@ void ScalarConverter::parseValue(const std::string &strInput, LiteralType type)
     case PSEUDO:
     {
         if (strInput == "nan" || strInput == "nanf")
-
-
+            castValues(std::numeric_limits<double>::quiet_NaN());
+        else if (strInput == "-inf" || strInput == "-inff")
+            castValues(-std::numeric_limits<double>::infinity());
+        else if (strInput == "+inf" || strInput == "+inff")
+            castValues(std::numeric_limits<double>::infinity());
         break;
     }
+    case INVALID:
     default:
-        std::cerr << "Not Found" << std::endl;
+        std::cerr << "Invalid literal type!" << std::endl;
         break;
     }
 }

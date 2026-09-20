@@ -8,13 +8,15 @@
 #include <iostream>
 #include <limits>
 #include <cfloat>
-#include <cctype> // covers a range of functions, also std::isprint() to cover besides letters also special chars
+#include <cctype>
 #include <cstdlib>
 #include <cerrno>
+#include <cmath>
 #include <iomanip>
 #include <exception>
 
-enum LiteralType{
+enum LiteralType
+{
     CHAR,
     INT,
     FLOAT,
@@ -25,9 +27,9 @@ enum LiteralType{
 
 class ScalarConverter
 {
-    public:
+public:
     static void convert(const std::string &strInput);
-    
+
 private:
     ScalarConverter();
     ScalarConverter(const ScalarConverter &original);
@@ -38,11 +40,10 @@ private:
     static void parseValue(const std::string &strInput, LiteralType type);
     static void castValues(double number);
 
-    static bool isInt(const std::string &valRep);
-    static bool isChar(const std::string &valRep);
-    static bool isFloat(const std::string &valRep);
-    static bool isDouble(const std::string &valRep);
-    static bool isPseudo(const std::string &valRep);
-
+    static bool isPseudo(const std::string &strInput);
+    static bool isChar(const std::string &strInput);
+    static bool isInt(const std::string &strInput);
+    static bool isFloat(const std::string &strInput);
+    static bool isDouble(const std::string &strInput);
 };
 void showError(const std::string &errorStr);
