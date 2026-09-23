@@ -2,12 +2,18 @@
 
 #include <iostream>
 #include <string>
+#include <cstdint>
+#include "Data.hpp"
 
 class Serializer
 {
 public:
-    uintptr_t serialize(Data *ptr);
-    Data *deserialize(uintptr_t raw);
+    static uintptr_t serialize(Data *ptr);
+    static Data *deserialize(uintptr_t raw);
 
 private:
+    Serializer();
+    Serializer(const Serializer &original);
+    Serializer &operator=(const Serializer &original);
+    ~Serializer();
 };
