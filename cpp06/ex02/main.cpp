@@ -10,54 +10,56 @@ void identify(Base &p)
 {
     try
     {
-        A &refA = dynamic_cast<A&>(p);
-        std::cout << "A" << std::endl;
-        return ;
+        A &refA = dynamic_cast<A &>(p);
+        (void)refA;
+        std::cout << "The type of the object REFERENCED is A." << std::endl;
+        return;
     }
-    catch (std::bad_cast &e)
+    catch (std::exception &e)
     {
-        std::cerr << "Error: " << e.what() << std::endl;
-    }
-    try
-    {
-        B &refB = dynamic_cast<B&>(p);
-        std::cout << "B" << std::endl;
-        return ;
-    }
-    catch (std::bad_cast &e)
-    {
-        std::cerr << "Error: " << e.what() << std::endl;
     }
     try
     {
-        C &refC = dynamic_cast<C&>(p);
-        std::cout << "C" << std::endl;
-        return ;
+        B &refB = dynamic_cast<B &>(p);
+        (void)refB;
+        std::cout << "The type of the object REFERENCED is B." << std::endl;
+        return;
     }
-    catch (std::bad_cast &e)
+    catch (std::exception &e)
     {
-        std::cerr << "Error: " << e.what() << std::endl;
+    }
+    try
+    {
+        C &refC = dynamic_cast<C &>(p);
+        (void)refC;
+        std::cout << "The type of the object REFERENCED is C." << std::endl;
+        return;
+    }
+    catch (std::exception &e)
+    {
     }
 }
 
 void identify(Base *p)
 {
+    if (p == NULL)
+        return;
     A *ptrA = dynamic_cast<A *>(p);
     if (ptrA != NULL)
     {
-        std::cout << "The type of the object is A." << std::endl;
+        std::cout << "The type of the object POINTED is A." << std::endl;
         return;
     }
     B *ptrB = dynamic_cast<B *>(p);
     if (ptrB != NULL)
     {
-        std::cout << "The type of the object is B." << std::endl;
+        std::cout << "The type of the object POINTED is B." << std::endl;
         return;
     }
     C *ptrC = dynamic_cast<C *>(p);
     if (ptrC != NULL)
     {
-        std::cout << "The type of the object is C." << std::endl;
+        std::cout << "The type of the object POINTED is C." << std::endl;
         return;
     }
 }
@@ -95,6 +97,10 @@ int main()
             std::cerr << "Failed to generate object!" << std::endl;
             return 1;
         }
+        std::cout << "\nPrinting the object pointed to: " << std::endl;
+        identify(generatedObj);
+        std::cout << "\nPrinting the object referenced to: " << std::endl;
+        identify(*generatedObj);
         delete generatedObj;
     }
     std::cout << "\n"
@@ -126,15 +132,15 @@ int main()
               << std::endl;
     {
         Base *ptrA = new A();
-        identify(ptrA);
+        identify(*ptrA);
         std::cout << "\n";
 
         Base *ptrB = new B();
-        identify(ptrB);
+        identify(*ptrB);
         std::cout << "\n";
 
         Base *ptrC = new C();
-        identify(ptrC);
+        identify(*ptrC);
         std::cout << "\n";
 
         delete ptrA;
