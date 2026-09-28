@@ -132,7 +132,7 @@ void ScalarConverter::castValues(double number)
     else
         std::cout << "int: " << static_cast<int>(number) << std::endl;
     // float conversion
-    std::cout << std::fixed << std::setprecision(1);
+    std::cout << std::fixed;
     std::cout << "float: " << static_cast<float>(number) << "f" << std::endl;
     // double conversion
     std::cout << "double: " << static_cast<double>(number) << std::endl;
