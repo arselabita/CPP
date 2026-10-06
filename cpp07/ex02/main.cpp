@@ -10,7 +10,8 @@ int main(int, char **)
     {
         try
         {
-            Array<int> *arr = new Array[];
+            Array<int> arr();
+            arr.size();
         }
         catch (const std::exception &e)
         {
@@ -25,12 +26,14 @@ int main(int, char **)
     {
         try
         {
-            Array<int> *arr = new Array[5];
+            Array<int> arr(5);
+            arr.size();
         }
         catch (const std::exception &e)
         {
             std::cerr << "Unexpected Failure: " << e.what() << std::endl;
         }
+        
     }
     std::cout << "\n"
               << std::string(10, '-')
