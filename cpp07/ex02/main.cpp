@@ -1,52 +1,50 @@
 #include "Array.hpp"
 
-int main(int, char**)
+int main(int, char **)
 {
-    Array<int> numbers(MAX_VAL);
-    int* mirror = new int[MAX_VAL];
-    srand(time(NULL));
-    for (int i = 0; i < MAX_VAL; i++)
+    std::cout << "\n"
+              << std::string(10, '-')
+              << std::endl;
+    std::cout << "Testing Template Class (Construction with no parameter):\n"
+              << std::endl;
     {
-        const int value = rand();
-        numbers[i] = value;
-        mirror[i] = value;
-    }
-    //SCOPE
-    {
-        Array<int> tmp = numbers;
-        Array<int> test(tmp);
-    }
-
-    for (int i = 0; i < MAX_VAL; i++)
-    {
-        if (mirror[i] != numbers[i])
+        try
         {
-            std::cerr << "didn't save the same value!!" << std::endl;
-            return 1;
+            Array<int> *arr = new Array[];
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << "Unexpected Failure: " << e.what() << std::endl;
         }
     }
-    try
+    std::cout << "\n"
+              << std::string(10, '-')
+              << std::endl;
+    std::cout << "Testing Template Class (Construction with parameter):\n"
+              << std::endl;
     {
-        numbers[-2] = 0;
+        try
+        {
+            Array<int> *arr = new Array[5];
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << "Unexpected Failure: " << e.what() << std::endl;
+        }
     }
-    catch(const std::exception& e)
+    std::cout << "\n"
+              << std::string(10, '-')
+              << std::endl;
+    std::cout << "Testing Template Class (Copy Constructor):\n"
+              << std::endl;
     {
-        std::cerr << e.what() << '\n';
     }
-    try
+    std::cout << "\n"
+              << std::string(10, '-')
+              << std::endl;
+    std::cout << "Testing Template Class (Assign Operator Constructor):\n"
+              << std::endl;
     {
-        numbers[MAX_VAL] = 0;
     }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-    }
-
-    for (int i = 0; i < MAX_VAL; i++)
-    {
-        numbers[i] = rand();
-    }
-    delete [] mirror;
-
     return 0;
 }

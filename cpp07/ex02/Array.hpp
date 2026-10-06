@@ -1,17 +1,42 @@
 #pragma once
 
-#define MAX_VAL 750
-
 #include <string>
 #include <iostream>
-#include <ctime>
 
-template <typename T>
-class Array {
+template <class T>
+class Array
+{
 public:
-    Array();
-    Array(unsigned int n);
-    Array(const Array &original);
-    Array &operator=(const Array &original);
-    ~Array();
+    Array()
+    {
+    }
+    Array(unsigned int n)
+    {
+        this->_num = n;
+    }
+    Array(const Array &original)
+    {
+        this->_num = original._num;
+    }
+    Array &operator=(const Array &original)
+    {
+        if (this != &original)
+        {
+            this->_num = original._num;
+        }
+        return *this;
+    }
+    ~Array()
+    {
+    }
+
+    
+    void size()
+    {
+        for (int i = 0; i < _num; i++)
+            std::count << "the number of elements in the array is: " << i << std::endl;
+    }
+
+private:
+    unsigned int _num;
 };
