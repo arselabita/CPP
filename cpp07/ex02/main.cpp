@@ -1,6 +1,11 @@
 #include "Array.hpp"
+#include <iostream>
+#include <string>
+#include <cstdlib>
+#include <ctime>
 
 #define MAX_VAL 750
+
 int main(int, char **)
 {
 
@@ -13,6 +18,11 @@ int main(int, char **)
         try
         {
             Array<int> arr(5);
+            arr[0] = 1;
+            arr[1] = 2;
+            arr[2] = 5;
+            arr[3] = 4;
+            arr[4] = 8;
             std::cout << "Array size is: " << arr.size() << std::endl;
             for (int i = 0; i < 5; i++)
                 std::cout << arr[i] << std::endl;
@@ -44,7 +54,37 @@ int main(int, char **)
         }
         catch (const std::exception &e)
         {
-            std::cerr << "Success! Cought Unexpected Failure: " << e.what() << std::endl;
+            std::cerr << "Unexpected Failure: " << e.what() << std::endl;
+        }
+    }
+    std::cout << "\n"
+              << std::string(10, '-')
+              << std::endl;
+    std::cout << "Testing Assignment Operator:\n"
+              << std::endl;
+    {
+        try
+        {
+            Array<std::string> original(3);
+            original[0] = "Arsela";
+            original[1] = "Stela";
+            original[2] = "Anja";
+
+            Array<std::string> copy(3);
+            copy[0] = "Orion";
+            copy[1] = "Erion";
+            copy[2] = "Parid";
+            original = copy;
+
+            for (int i = 0; i < 3; i++)
+            {
+                std::cout << "Original[" << i << "]: " << original[i] << std::endl;
+                std::cout << "Copy[" << i << "]: " << copy[i] << std::endl;
+            }
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << "Unexpected Failure: " << e.what() << std::endl;
         }
     }
     std::cout << "\n"
@@ -60,7 +100,7 @@ int main(int, char **)
         }
         catch (const std::exception &e)
         {
-            std::cerr << "Success! Cought Unexpected Failure: " << e.what() << std::endl;
+            std::cerr << "Success! Unexpected Failure: " << e.what() << std::endl;
         }
     }
     std::cout << "\n"

@@ -1,23 +1,6 @@
 #include "iter.hpp"
+#include <iostream>
 
-template <typename T, typename Function>
-void iter(T *arrPtr, const size_t length, Function addVal)
-{
-    for (size_t i = 0; i < length; i++)
-        addVal(arrPtr[i]);
-}
-void add(int &num)
-{
-    num += num;
-}
-void multipy(double &num)
-{
-    num *= num;
-}
-void print(const std::string &str)
-{
-    std::cout << "My name is: " << str << std::endl;
-}
 int main()
 {
     std::cout << "\n"
@@ -27,7 +10,8 @@ int main()
               << std::endl;
     {
         int arr[5] = {1, 2, 3, 4, 5};
-        iter(arr, 5, add);
+        std::size_t arrLength = sizeof(arr) / sizeof(arr[0]);
+        ::iter(arr, arrLength, add<int>);
 
         for (int i = 0; i < 5; i++)
             std::cout << arr[i] << std::endl;
@@ -38,8 +22,9 @@ int main()
     std::cout << "Testing Template Function (const funct pointer and using string):\n"
               << std::endl;
     {
-        std::string arr[5] = {"Arsela", "Anja", "Xhennet", "Hidri", "Orion"};
-        iter(arr, 5, print);
+        const std::string arr[5] = {"Arsela", "Anja", "Xhennet", "Hidri", "Orion"};
+        std::size_t arrLength = sizeof(arr) / sizeof(arr[0]);
+        ::iter(arr, arrLength, print<const std::string>);
     }
     std::cout << "\n"
               << std::string(10, '-')
@@ -48,7 +33,8 @@ int main()
               << std::endl;
     {
         double arr[5] = {1.1, 1.2, 3.4, 5.6, 7.9};
-        iter(arr, 5, multipy);
+        std::size_t arrLength = sizeof(arr) / sizeof(arr[0]);
+        ::iter(arr, arrLength, multiplication<double>);
 
         for (int i = 0; i < 5; i++)
             std::cout << arr[i] << std::endl;

@@ -30,7 +30,6 @@ public:
             this->_arr = NULL;
         else
         {
-
             this->_arr = new T[this->_num]();
             for (unsigned int i = 0; i < this->_num; i++)
             {
@@ -42,13 +41,12 @@ public:
     {
         if (this != &original)
         {
-            delete[] this->_arr; // cleans up memory from the previous one
+            delete[] this->_arr;
             this->_num = original._num;
             if (this->_num == 0)
                 this->_arr = NULL;
             else
             {
-
                 this->_arr = new T[this->_num]();
                 for (unsigned int i = 0; i < this->_num; i++)
                 {
