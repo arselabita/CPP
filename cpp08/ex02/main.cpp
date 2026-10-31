@@ -1,5 +1,5 @@
 #include "MutantStack.hpp"
-#include <list>
+
 int main()
 {
     std::cout << BOLD << CYAN << "--------------------------------------------------------------------" << RESET << std::endl;
